@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Enemy\EnemyAttack.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyHealth.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyMovement.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\Player\Shooting.cs" />
  <Reference Include="UnityEngine.UI">
