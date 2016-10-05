@@ -20,6 +20,8 @@ public class PlayerHealth : MonoBehaviour {
     bool isDead;
     bool damaged;
 
+    public Text characterState;
+
     // Use this for initialization
     void Start () {
 
@@ -34,15 +36,20 @@ public class PlayerHealth : MonoBehaviour {
 
         if (damaged)
         {
+            
             damageScreenEffect.color = flashColor;
         }
         else
         {
             damageScreenEffect.color = Color.Lerp(damageScreenEffect.color, Color.clear, flashSpeed * Time.deltaTime);
+            
         }
 
-        damaged = false;	
-	}
+        damaged = false;
+
+        CharacterState();
+
+    }
 
     public void TakeDamage(int damageAmout)
     {
@@ -57,6 +64,30 @@ public class PlayerHealth : MonoBehaviour {
         if (currentHealth <= 0 && !isDead)
         {
 
+        }
+    }
+
+    public void CharacterState()
+    {
+        if (currentHealth > 70)
+        {
+            characterState.text = "d";
+            characterState.color = Color.green;
+        }
+        else if (currentHealth <= 70 && currentHealth >= 40)
+        {
+            characterState.text = "h";
+            characterState.color = Color.yellow;
+        }
+        else if (currentHealth < 40 && currentHealth > 0)
+        {
+            characterState.text = "x";
+            characterState.color = Color.red;
+        }
+        else
+        {
+            characterState.text = "z";
+            characterState.color = Color.white;
         }
     }
 }
