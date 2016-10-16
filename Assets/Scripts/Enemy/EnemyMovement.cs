@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyMovement : MonoBehaviour {
 
     Transform player;
-
+        
     NavMeshAgent nav;
 
 	// Use this for initialization
@@ -18,7 +18,11 @@ public class EnemyMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        nav.SetDestination(player.position);
-
+        nav.SetDestination ( player.position );
+        //Debug.Log ( "Playerpos: " + player.position );
+        //Debug.Log ( "Path:" );
+        /*foreach (Vector3 v3 in nav.path.corners) {
+            Debug.Log ( v3 );
+        }*/
 	}
 }
