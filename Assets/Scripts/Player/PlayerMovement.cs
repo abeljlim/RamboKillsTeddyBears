@@ -35,9 +35,22 @@ public class PlayerMovement : MonoBehaviour {
         // The value will be in the range -1 and 1 for keyboard and joystick input
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-
-        Movement(horizontal, 0f, vertical);
-
+        
+        //For isometric movement - rotates movement angle to match the camera angle.
+        Transform CameraTransform = Camera.main.gameObject.transform;
+        float cameraYangle = CameraTransform.rotation.eulerAngles.y / 180 * Mathf.PI; //camera angle in radians
+        Debug.Log ( cameraYangle );
+        Vector2 movementVec = new Vector2 ( horizontal, vertical );
+        if (!(vertical == 0 && horizontal == 0))
+        {
+            float angle = Mathf.Atan2 ( vertical, horizontal );
+            angle -= cameraYangle;
+            float rotatedY = Mathf.Sin ( angle )*movementVec.magnitude;
+            float rotatedX = Mathf.Cos ( angle )*movementVec.magnitude;
+            Movement ( rotatedX, 0f, rotatedY );
+        }
+        
+        //Movement ( horizontal, 0f, vertical );
         Rotation();
     }
 
