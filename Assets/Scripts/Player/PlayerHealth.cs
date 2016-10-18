@@ -56,7 +56,20 @@ public class PlayerHealth : MonoBehaviour {
 
         if (currentHealth <= 0 && !isDead)
         {
-
+            //code here for player dying
         }
     }
+    /// <summary>
+    /// Player takes damage from his own bullets. No longer used; refer to PlayerBullet class instead.
+    /// </summary>
+    /// <param name="other"></param>
+    /*void OnCollisionEnter ( Collision other )
+    {
+        if (other.gameObject.CompareTag ( "PlayerBullet" ))
+        {
+            //Debug.Log ( "Collision" );
+            TakeDamage ( 20 ); //current
+            justHitPlayer = true;
+        }
+    }*/
 }
