@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour {
         //For isometric movement - rotates movement angle to match the camera angle.
         Transform CameraTransform = Camera.main.gameObject.transform;
         float cameraYangle = CameraTransform.rotation.eulerAngles.y / 180 * Mathf.PI; //camera angle in radians
-        Debug.Log ( cameraYangle );
+        //Debug.Log ( cameraYangle );
         Vector2 movementVec = new Vector2 ( horizontal, vertical );
         if (!(vertical == 0 && horizontal == 0))
         {
