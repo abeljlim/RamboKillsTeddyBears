@@ -48,6 +48,7 @@
      <Compile Include="Assets\FadeObjectInOut.cs" />
      <Compile Include="Assets\LevelNameText.cs" />
      <Compile Include="Assets\PlanetOrbit.cs" />
+     <Compile Include="Assets\PlayerBullet.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraControl.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyAttack.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyHealth.cs" />

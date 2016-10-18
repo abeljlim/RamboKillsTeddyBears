@@ -8,6 +8,9 @@ public class WaveManager : MonoBehaviour {
     float gameTime = 0;
     float waveTime = 0;
     public GameObject[] SpawnPoint; //Not used
+    public string[] levelName; //to correspond to the enemies spawned in the enemy gameobject in EnemySpawner
+    public int[] levelTime;
+    public int waveStartTime = 5;
 
 	// Use this for initialization
 	void Start () {
@@ -18,16 +21,19 @@ public class WaveManager : MonoBehaviour {
 	void Update () {
         gameTime += Time.deltaTime;
         waveTime += Time.deltaTime;
-        if (waveTime >= 10 && level == 1)
+
+        //advance to next level when time of wave elapses, as long as more levels exist
+        if (waveTime >= levelTime[level-1] && level < levelName.Length)
         {
-            LevelNameText.text = "Level 2: Killing cute unicorns";
-            EnemySpawner.spawning = false;
-            level = 2;
+            LevelNameText.text = levelName[level]; //level-1 is the 0-based level
+            EnemySpawner.spawning = false; //pause for the period of waveStartTime
+            level++;
             waveTime = 0;
         }
-        if (waveTime >= 5 && level == 2 && !EnemySpawner.spawning)
+
+        //start spawning of the current wave after waveStartTime
+        if (waveTime >= waveStartTime && !EnemySpawner.spawning)
         {
-            //could make this code only run once
             EnemySpawner.spawning = true;
         }
 	}

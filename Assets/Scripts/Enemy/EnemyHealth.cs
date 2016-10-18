@@ -62,7 +62,7 @@ public class EnemyHealth : MonoBehaviour {
     {
         if (other.gameObject.CompareTag ( "PlayerBullet" ))
         {
-            Debug.Log ( "Collision" );
+            //Debug.Log ( "Collision" );
             TakeDamage ( 40 ); //current
         }
     }
