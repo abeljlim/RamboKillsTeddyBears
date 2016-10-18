@@ -15,6 +15,8 @@ public class Shooting : MonoBehaviour {
 
     private float effectDisplayTime = 0.2f;
 
+    //public Transform PlayerBullet;
+
     // Use this for initialization
     void Start () {
 
@@ -22,8 +24,6 @@ public class Shooting : MonoBehaviour {
         bulletLine = GetComponent<LineRenderer>();
         FireSoundEffect = GetComponent<AudioSource>();
         bulletLightEffects = GetComponent<Light>();
-
-
     }
 	
 	// Update is called once per frame
@@ -63,5 +63,9 @@ public class Shooting : MonoBehaviour {
         bulletLine.SetPosition(1, transform.position + transform.forward * attackRange);
 
         FireSoundEffect.Play();
+
+        //Fire a bullet projectile
+        GameObject CurrPlayerBullet = Instantiate ( Resources.Load("PlayerBullet"), transform.position + transform.forward * 1, Quaternion.identity ) as GameObject;
+        CurrPlayerBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
     }
 }
