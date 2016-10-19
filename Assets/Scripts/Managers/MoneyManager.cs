@@ -9,10 +9,11 @@ public class MoneyManager : MonoBehaviour {
 
 	void Awake () {
         text = GetComponent<Text> (); //get the UI text
+        Debug.Log ( text );
         money = 0; //reset money
 	}
 	
 	void Update () {
-        text.text = "EXP: " + money;
+        text.text = money.ToString("000000");
 	}
 }
