@@ -11,7 +11,7 @@ public class LevelNameText : MonoBehaviour
     void Awake ()
     {
         textObj = GetComponent<Text> (); //get the UI text
-        text = "Level 1: Slaughtering innocent little bears"; //reset text to level 1's
+        text = "Level 1: Teddy target practice"; //reset text to level 1's
     }
 
     void Update ()

@@ -42,14 +42,14 @@ public class EnemyAttack : MonoBehaviour {
             playerHealth.TakeDamage(attackDamage);
         }
     }
-    /*
+    
     void OnTriggerEnter ( Collider other )
     {
         if (other.gameObject == player)
         {
             playerInRange = true;
         }
-    }*/
+    }
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject == player)
