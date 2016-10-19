@@ -9,6 +9,7 @@ public class EnemyAttack : MonoBehaviour {
     GameObject player;
 
     PlayerHealth playerHealth;
+    EnemyHealth enemyHealth;
 
     bool playerInRange;
     float timer;
@@ -18,21 +19,21 @@ public class EnemyAttack : MonoBehaviour {
 
         player = GameObject.FindGameObjectWithTag("Player");
         playerHealth = player.GetComponent<PlayerHealth>();
-	
+        enemyHealth = GetComponent<EnemyHealth> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
         timer += Time.deltaTime;
-        if (timer >= attackFrequency && playerInRange)
+        if (timer >= attackFrequency && playerInRange && !enemyHealth.isDead)
         {
-            Attact();
+            Attack();
         }
 	
 	}
 
-    void Attact()
+    void Attack()
     {
         timer = 0;
 
@@ -41,14 +42,14 @@ public class EnemyAttack : MonoBehaviour {
             playerHealth.TakeDamage(attackDamage);
         }
     }
-
-    void OnTriggerEnter(Collider other)
+    /*
+    void OnTriggerEnter ( Collider other )
     {
         if (other.gameObject == player)
         {
             playerInRange = true;
         }
-    }
+    }*/
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject == player)
@@ -56,4 +57,5 @@ public class EnemyAttack : MonoBehaviour {
             playerInRange = false;
         }
     }
+
 }

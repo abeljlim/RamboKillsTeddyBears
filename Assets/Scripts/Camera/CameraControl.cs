@@ -23,7 +23,12 @@ public class CameraControl : MonoBehaviour {
     void LateUpdate()
     {
         Vector3 targetCameraPosition = target.position + offset;
-
         transform.position = targetCameraPosition;
     }
+
+    //debug - testing targeting of sun
+    /*void FixedUpdate ()
+    {
+        transform.LookAt ( new Vector3 ( target.position.x, target.position.y, target.position.z ) );
+    }*/
 }
