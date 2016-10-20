@@ -17,6 +17,7 @@ public class PlayerHealth : MonoBehaviour {
     public float currGameOverTime = 0f;
     public float currRedScreenTime = 0f; //for death screen reddening
 
+    //public int waitUpdateCycle = 0; //bool used just to wait an update cycle before executing the next code
     AudioSource playerAudio;
     PlayerMovement playerMovement;
 
@@ -37,6 +38,8 @@ public class PlayerHealth : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+
+        CharacterState ();
         if (isDead)
         {
             //Begin game over 'animation' with fading text
@@ -90,8 +93,6 @@ public class PlayerHealth : MonoBehaviour {
 
         damaged = false;
 
-        CharacterState ();
-
     }
 
     public void TakeDamage(int damageAmout)
@@ -101,6 +102,8 @@ public class PlayerHealth : MonoBehaviour {
         currentHealth -= damageAmout;
 
 
+        healthSlider.value = currentHealth;
+
         if (currentHealth <= 0 && !isDead)
         {
             //code here for player dying
@@ -108,8 +111,6 @@ public class PlayerHealth : MonoBehaviour {
             PlayerDie ();
             return;
         }
-
-        healthSlider.value = currentHealth;
 
         playerAudio.Play();
     }
