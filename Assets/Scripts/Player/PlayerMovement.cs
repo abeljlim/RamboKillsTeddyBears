@@ -47,10 +47,22 @@ public class PlayerMovement : MonoBehaviour {
             angle -= cameraYangle;
             float rotatedY = Mathf.Sin ( angle )*movementVec.magnitude;
             float rotatedX = Mathf.Cos ( angle )*movementVec.magnitude;
+            /*
+            Vector3 moveDir;
+            if (vertical == 0)
+            {
+               moveDir = new Vector3(rotatedX, 0, rotatedY);
+            }
+            else
+            {
+               moveDir = new Vector3(rotatedX, 0, rotatedY);
+            }
+            transform.rotation = Quaternion.LookRotation(moveDir);*/
             Movement ( rotatedX, 0f, rotatedY );
         }
-        
+
         //Movement ( horizontal, 0f, vertical );
+
         Rotation();
     }
 
@@ -61,6 +73,8 @@ public class PlayerMovement : MonoBehaviour {
         movement = movement.normalized * playerWalkSpeed;
 
         playerRigidbody.MovePosition(transform.position + movement);
+        //transform.rotation.SetFromToRotation(transform.position, transform.position + movement);
+        //playerRigidbody.MoveoRtation();
     }
 
     void Rotation()
