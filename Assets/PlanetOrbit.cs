@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlanetOrbit : MonoBehaviour
 {
-    public float SecondsInDay = 30f;
+    public static float SecondsInDay = 30f;
 
     //Determine whether it's day or night based on whether the sun is above the position 0
     //Could also use fuzzy logic for this.
