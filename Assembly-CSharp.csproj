@@ -48,6 +48,7 @@
      <Compile Include="Assets\FadeObjectInOut.cs" />
      <Compile Include="Assets\FadingText.cs" />
      <Compile Include="Assets\LevelNameText.cs" />
+     <Compile Include="Assets\MainMenu\MenuControl.cs" />
      <Compile Include="Assets\PauseManager.cs" />
      <Compile Include="Assets\PlanetOrbit.cs" />
      <Compile Include="Assets\PlayerBullet.cs" />
