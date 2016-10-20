@@ -5,8 +5,7 @@ public class WaveManager : MonoBehaviour {
 
     //access level with EnemySpawner.level;
     public static int level = 1;
-    float gameTime = 0;
-    float waveTime = 0;
+    public static float waveTime = 0;
     public GameObject[] SpawnPoint; //Not used
     public string[] levelName; //to correspond to the enemies spawned in the enemy gameobject in EnemySpawner
     public int[] levelTime;
@@ -19,7 +18,6 @@ public class WaveManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        gameTime += Time.deltaTime;
         waveTime += Time.deltaTime;
 
         //advance to next level when time of wave elapses, as long as more levels exist
