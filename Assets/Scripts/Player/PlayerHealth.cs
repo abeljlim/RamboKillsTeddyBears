@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour {
     public Slider healthSlider;
     public Image damageScreenEffect;
     public AudioClip deathClip;
+    int GOtimer = 0;
 
     public float flashSpeed = 5f;
 
@@ -42,6 +43,7 @@ public class PlayerHealth : MonoBehaviour {
         CharacterState ();
         if (isDead)
         {
+            GOtimer++;
             //Begin game over 'animation' with fading text
             if (currGameOverTime < 5f)
             {
@@ -79,6 +81,12 @@ public class PlayerHealth : MonoBehaviour {
                 damageScreenEffect.color = Color.Lerp ( Color.clear, Color.red, currRedScreenTime / redScreenTime * 0.6f );
                 //Debug.Log ( currRedScreenTime );
             }
+
+            if (GOtimer == 400)
+            {
+                Application.LoadLevel("MainMenu");
+            }
+
             return;
         }
         if (damaged)
