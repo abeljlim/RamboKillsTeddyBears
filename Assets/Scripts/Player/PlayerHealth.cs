@@ -8,11 +8,14 @@ public class PlayerHealth : MonoBehaviour {
     public int currentHealth;
     public Slider healthSlider;
     public Image damageScreenEffect;
-    //public AudioClip deathClip;
+    public AudioClip deathClip;
 
     public float flashSpeed = 5f;
 
     public Color flashColor = new Color(1f, 0f, 0f, 0.1f);
+    public const float redScreenTime = 1f; //for death screen reddening
+    public float currGameOverTime = 0f;
+    public float currRedScreenTime = 0f; //for death screen reddening
 
     AudioSource playerAudio;
     PlayerMovement playerMovement;
@@ -34,6 +37,47 @@ public class PlayerHealth : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        if (isDead)
+        {
+            //Begin game over 'animation' with fading text
+            if (currGameOverTime < 5f)
+            {
+                currGameOverTime += PauseManager.deltaTime;
+                GameObject[] GameOverObjs = GameObject.FindGameObjectsWithTag ( "GameOverTxt" );
+
+                //manually set
+                GameObject GameTxt, OverTxt;
+                GameTxt = GameOverObjs[1];
+                OverTxt = GameOverObjs[0];
+
+                //ensure that the Game Over text would be found
+                foreach(GameObject g in GameOverObjs) {
+                    if(g.transform.name == "GameOverPt1") {
+                        GameTxt = g;
+                    } else 
+                    if (g.transform.name == "GameOverPt2")
+                    {
+                        OverTxt = g;
+                    }
+                }
+
+                if (currGameOverTime >= 2f && !GameTxt.GetComponent<UITextFade> ().faded)
+                {
+                    GameTxt.GetComponent<UITextFade> ().FadeIn ();
+                }
+                if (currGameOverTime >= 3f && !OverTxt.GetComponent<UITextFade> ().faded)
+                {
+                    OverTxt.GetComponent<UITextFade> ().FadeIn ();
+                }
+            }
+            if (currRedScreenTime < redScreenTime)
+            {
+                currRedScreenTime += PauseManager.deltaTime;
+                damageScreenEffect.color = Color.Lerp ( Color.clear, Color.red, currRedScreenTime / redScreenTime * 0.6f );
+                //Debug.Log ( currRedScreenTime );
+            }
+            return;
+        }
         if (damaged)
         {
             
@@ -42,12 +86,11 @@ public class PlayerHealth : MonoBehaviour {
         else
         {
             damageScreenEffect.color = Color.Lerp(damageScreenEffect.color, Color.clear, flashSpeed * Time.deltaTime);
-            
         }
 
         damaged = false;
 
-        CharacterState();
+        CharacterState ();
 
     }
 
@@ -57,14 +100,26 @@ public class PlayerHealth : MonoBehaviour {
 
         currentHealth -= damageAmout;
 
-        healthSlider.value = currentHealth;
-
-        playerAudio.Play();
 
         if (currentHealth <= 0 && !isDead)
         {
             //code here for player dying
+            isDead = true;
+            PlayerDie ();
+            return;
         }
+
+        healthSlider.value = currentHealth;
+
+        playerAudio.Play();
+    }
+
+    public void PlayerDie ()
+    {
+        playerAudio.clip = deathClip;
+        playerAudio.Play ();
+        damageScreenEffect.color = flashColor;
+        PauseManager.Pause ();
     }
 
     public void CharacterState()

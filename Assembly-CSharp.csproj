@@ -46,7 +46,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\FadeObjectInOut.cs" />
+     <Compile Include="Assets\FadingText.cs" />
      <Compile Include="Assets\LevelNameText.cs" />
+     <Compile Include="Assets\PauseManager.cs" />
      <Compile Include="Assets\PlanetOrbit.cs" />
      <Compile Include="Assets\PlayerBullet.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraControl.cs" />
@@ -58,7 +60,9 @@
      <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\Player\Shooting.cs" />
+     <Compile Include="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" />
      <Compile Include="Assets\Timer.cs" />
+     <Compile Include="Assets\UITextFade.cs" />
      <Compile Include="Assets\WaveManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
