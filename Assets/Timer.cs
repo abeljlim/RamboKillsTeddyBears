@@ -6,7 +6,7 @@ using System;
 public class Timer : MonoBehaviour {
 
     public Text timerText;
-    public static float elapsedTime;
+    public float elapsedTime;
     TimeSpan t;
 
 	// Use this for initialization

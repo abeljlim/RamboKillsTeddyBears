@@ -35,10 +35,9 @@ public class PlayerBullet : MonoBehaviour {
             }
         }
 	}
-
+    
     void OnCollisionEnter ( Collision other )
     {
-        //Debug.Log ( "Collision" );
         GameObject player = GameObject.FindGameObjectWithTag ( "Player" );
         if (other.gameObject == player)
         {

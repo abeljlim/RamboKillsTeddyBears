@@ -84,6 +84,7 @@ public class PlayerHealth : MonoBehaviour {
 
             if (GOtimer == 400)
             {
+                PauseManager.Unpause ();
                 Application.LoadLevel("MainMenu");
             }
 

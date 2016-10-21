@@ -4,15 +4,17 @@ using System.Collections;
 public class WaveManager : MonoBehaviour {
 
     //access level with EnemySpawner.level;
-    public static int level = 1;
+    public static int level;
     public GameObject[] SpawnPoint; //Not used
     public string[] levelName; //to correspond to the enemies spawned in the enemy gameobject in EnemySpawner
-    public static float waveTime = 0; //current wave time
+    public static float waveTime; //current wave time
     public int[] levelTime; //full time for the wave to finish
     public int waveStartTime = 5;
 
 	// Use this for initialization
 	void Start () {
+        level = 1;
+        waveTime = 0;
         EnemySpawner.spawning = true;
         PlanetOrbit.SecondsInDay = levelTime[level - 1]; //update time of the day with the wave time.
 	}
