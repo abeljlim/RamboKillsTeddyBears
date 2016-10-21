@@ -15,7 +15,7 @@ public class EnemyHealth : MonoBehaviour {
     public bool isDead;
 
     //hit effect
-    public static float flashTime = 0.2f;
+    public static float flashTime;
     public float currFlashTime = 0f;
     public bool hitFlash = false;
     private static Color[] initColors;
@@ -23,6 +23,7 @@ public class EnemyHealth : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        flashTime = 0.2f;
         currHealth = maxHealth;
         capsuleCollider = GetComponent<CapsuleCollider> ();
         nav = GetComponent<NavMeshAgent> ();
@@ -124,7 +125,7 @@ public class EnemyHealth : MonoBehaviour {
     {
         if (other.gameObject.CompareTag ( "PlayerBullet" ))
         {
-            Debug.Log ( "Collision" );
+            //Debug.Log ( "Collision" );
             TakeDamage ( 40 );
         }
     }
