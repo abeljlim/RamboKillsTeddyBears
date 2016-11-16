@@ -47,10 +47,22 @@ public class PlayerMovement : MonoBehaviour {
             angle -= cameraYangle;
             float rotatedY = Mathf.Sin ( angle )*movementVec.magnitude;
             float rotatedX = Mathf.Cos ( angle )*movementVec.magnitude;
+            /*
+            Vector3 moveDir;
+            if (vertical == 0)
+            {
+               moveDir = new Vector3(rotatedX, 0, rotatedY);
+            }
+            else
+            {
+               moveDir = new Vector3(rotatedX, 0, rotatedY);
+            }
+            transform.rotation = Quaternion.LookRotation(moveDir);*/
             Movement ( rotatedX, 0f, rotatedY );
         }
-        
+
         //Movement ( horizontal, 0f, vertical );
+
         Rotation();
     }
 
@@ -60,7 +72,26 @@ public class PlayerMovement : MonoBehaviour {
 
         movement = movement.normalized * playerWalkSpeed;
 
-        playerRigidbody.MovePosition(transform.position + movement);
+        Vector3 direction = movement;
+
+        //The following raycast is to prevent movement that would go through thin objects and walls (such as hollow walls), and such
+        Ray ray = new Ray ( transform.position, direction );
+        RaycastHit hit;
+        if (!Physics.Raycast ( ray, out hit, direction.magnitude))
+        {
+
+            playerRigidbody.MovePosition ( transform.position + movement );
+            // Do something if hit
+        }
+        else
+        {
+            playerRigidbody.MovePosition ( hit.point ); //go as close as possible to the place hit
+        }
+        
+
+        //playerRigidbody.MovePosition(transform.position + movement);
+        //transform.rotation.SetFromToRotation(transform.position, transform.position + movement);
+        //playerRigidbody.MoveoRtation();
     }
 
     void Rotation()
