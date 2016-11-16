@@ -6,6 +6,10 @@ public class PlayerWeapons : MonoBehaviour {
 
     AudioSource ButtonSound;
     public Text gun_A, gun_B;
+
+    public Text skill, text_skill;
+    public static bool skill_on;
+
     public static int weaponState;
     public AudioClip ButtonPress;
 
@@ -15,12 +19,32 @@ public class PlayerWeapons : MonoBehaviour {
         ButtonSound = GetComponent<AudioSource>();
 
         weaponState = 1;
+        skill_on = false;
     }
 
     // Update is called once per frame
     void Update() {
 
+        SkillSelected();
         GunSelected();
+    }
+
+    private void SkillSelected()
+    {
+        if (Input.GetKeyUp("r") && skill_on == false)
+        {
+            skill_on = true;
+        }
+
+        if (skill_on)
+        {
+            text_skill.enabled = true;
+            skill.color = Color.black;
+        }else
+        {
+            text_skill.enabled = false;
+            skill.color = Color.white;
+        }
     }
 
     private void GunSelected()
