@@ -40,7 +40,6 @@ public class Shooting : MonoBehaviour {
         {
             DisableEffect();
         }
-	
 	}
 
     private void DisableEffect()
@@ -58,14 +57,30 @@ public class Shooting : MonoBehaviour {
         bulletParticles.Stop();
         bulletParticles.Play();
 
-        bulletLine.enabled = true;
+        //bulletLine.enabled = true;
         bulletLine.SetPosition(0, transform.position + transform.forward * 1);
         bulletLine.SetPosition(1, transform.position + transform.forward * attackRange);
 
         FireSoundEffect.Play();
 
-        //Fire a bullet projectile
-        GameObject CurrPlayerBullet = Instantiate ( Resources.Load("PlayerBullet"), transform.position + transform.forward * 1, Quaternion.identity ) as GameObject;
-        CurrPlayerBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+        if (PlayerWeapons.weaponState == 1)
+        {
+            //Fire a bullet projectile
+            GameObject CurrPlayerBullet = Instantiate(Resources.Load("PlayerBullet"), transform.position + transform.forward * 1, Quaternion.identity) as GameObject;
+            CurrPlayerBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+        }
+
+        if (PlayerWeapons.weaponState == 2)
+        {
+            GameObject CurrPlayerBullet1 = Instantiate(Resources.Load("PlayerBullet"), transform.position + transform.right * 1, Quaternion.identity) as GameObject;
+            CurrPlayerBullet1.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+            GameObject CurrPlayerBullet2 = Instantiate(Resources.Load("PlayerBullet"), transform.position + transform.right * -1, Quaternion.identity) as GameObject;
+            CurrPlayerBullet2.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+            //Fire a bullet projectile
+            //GameObject CurrPlayerBullet1 = Instantiate(Resources.Load("PlayerBullet"), new Vector3(transform.position.x -1, transform.position.y, transform.position.z-1) + transform.forward * 1, Quaternion.identity) as GameObject;
+            //GameObject CurrPlayerBullet2 = Instantiate(Resources.Load("PlayerBullet"), new Vector3(transform.position.x + 1, transform.position.y, transform.position.z + 1) + transform.forward * 1, Quaternion.identity) as GameObject;
+            //CurrPlayerBullet1.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+            //CurrPlayerBullet2.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+        }
     }
 }
