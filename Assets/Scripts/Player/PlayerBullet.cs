@@ -10,6 +10,7 @@ public class PlayerBullet : MonoBehaviour {
     public float timeSincePlayerDamage = 0;
     public const float timeBeforeDamagingPlayer = 0.5f; //
     public bool justHitPlayer = false;
+    private int numCollisions = 0;
 
 	void Start () {
         //When the bullets go out of bounds, then destroy them.
@@ -34,10 +35,18 @@ public class PlayerBullet : MonoBehaviour {
                 justHitPlayer = false;
             }
         }
+
+        //destroy the object after a certain number of collisions
+        if(numCollisions == 4)
+        {
+            Destroy(gameObject);
+        }
 	}
     
     void OnCollisionEnter ( Collision other )
     {
+        numCollisions++;
+
         GameObject player = GameObject.FindGameObjectWithTag ( "Player" );
         if (other.gameObject == player)
         {

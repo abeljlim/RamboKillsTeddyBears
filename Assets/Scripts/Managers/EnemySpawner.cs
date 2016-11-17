@@ -13,7 +13,7 @@ public class EnemySpawner : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         // Repeatedly call Spawn at intervals of spawnInterval.
-        spawnInterval = 3;
+        spawnInterval = 5;
         InvokeRepeating ( "Spawn", 0, spawnInterval );
 	}
 

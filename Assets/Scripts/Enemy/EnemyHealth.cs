@@ -125,8 +125,11 @@ public class EnemyHealth : MonoBehaviour {
     {
         if (other.gameObject.CompareTag ( "PlayerBullet" ))
         {
-            //Debug.Log ( "Collision" );
-            TakeDamage ( 40 );
+            if (WaveManager.isDay == true)
+                //Debug.Log ( "Collision" );
+                TakeDamage(100);
+            else
+                TakeDamage(50);
         }
     }
 }
