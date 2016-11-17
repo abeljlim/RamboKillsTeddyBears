@@ -39,6 +39,15 @@ public class PlayerHealth : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        // Debug for health regen
+        if (Input.GetKeyUp("h"))
+        {
+            if (currentHealth < 100)
+            {
+                currentHealth += 10;
+                healthSlider.value = currentHealth;
+            }
+        }
 
         CharacterState ();
         if (isDead)
