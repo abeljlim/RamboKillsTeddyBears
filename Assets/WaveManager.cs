@@ -36,9 +36,7 @@ public class WaveManager : MonoBehaviour {
 
             PlayerPrefs.SetInt("previousWave", Application.loadedLevel);
 
-            int currentScore = MoneyManager.money;
-
-            PlayerPrefs.SetInt("score", currentScore);
+            PlayerPrefs.SetInt("score", MoneyManager.money);
             Application.LoadLevel("Shop");
         }
 

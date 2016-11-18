@@ -113,7 +113,9 @@ public class EnemyHealth : MonoBehaviour {
         capsuleCollider.isTrigger = true; //make the enemy intangible
         Destroy ( rigidBody );
         nav.enabled = false;
+
         MoneyManager.money += 20;
+
         Destroy ( gameObject , 0.75f);
     }
 

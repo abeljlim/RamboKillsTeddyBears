@@ -9,20 +9,20 @@ public class MoneyManager : MonoBehaviour {
 
     void Start()
     {
-        money = 0; //reset money
     }
 
 	void Awake () {
         text = GetComponent<Text> (); //get the UI text
         Debug.Log ( text );
-        money = 0;
+        //money = 0;
+        money = PlayerPrefs.GetInt("score");
 	}
 	
 	void Update () {
         // money from previous round
-        int newMoney = PlayerPrefs.GetInt("score");
+        //int newMoney = PlayerPrefs.GetInt("score");
 
-        money = newMoney;
+        //money = newMoney;
 
         text.text = money.ToString("000000");
 	}
