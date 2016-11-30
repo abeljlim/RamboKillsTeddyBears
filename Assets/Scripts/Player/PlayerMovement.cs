@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour {
     // The length of the ray from the camera into the scene
     float cameraRayLength = 100f;          
 
-    private float playerWalkSpeed = 0.5f;
+    private float playerWalkSpeed = 0.25f;
     private Vector3 movement;
 
     Rigidbody playerRigidbody;
@@ -26,7 +26,13 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+        if (PlayerWeapons.skill_on)
+        {
+            playerWalkSpeed = 0.5f;
+        }
+        else
+            playerWalkSpeed = 0.25f;
 	}
 
     void FixedUpdate()

@@ -9,6 +9,9 @@ public class PlayerWeapons : MonoBehaviour {
 
     public Text skill, text_skill;
     public static bool skill_on;
+    public bool gun1, gun2, gun3, gun4;
+
+    private int skillTimer;
 
     public static int weaponState;
     public AudioClip ButtonPress;
@@ -17,6 +20,13 @@ public class PlayerWeapons : MonoBehaviour {
     void Start() {
 
         ButtonSound = GetComponent<AudioSource>();
+
+        skillTimer = 0;
+
+        gun1 = true;
+        gun2 = true;
+        gun3 = false;
+        gun4 = false;
 
         weaponState = 1;
         skill_on = false;
@@ -27,6 +37,11 @@ public class PlayerWeapons : MonoBehaviour {
 
         SkillSelected();
         GunSelected();
+
+        if(!gun1)
+        {
+            gun_A.enabled = false;
+        }
     }
 
     private void SkillSelected()
@@ -34,6 +49,13 @@ public class PlayerWeapons : MonoBehaviour {
         if (Input.GetKeyUp("r") && skill_on == false)
         {
             skill_on = true;
+        }
+
+        if(skill_on)
+        {
+            skillTimer++;
+            if (skillTimer > 150)
+                skill_on = false;
         }
 
         if (skill_on)
@@ -56,8 +78,19 @@ public class PlayerWeapons : MonoBehaviour {
         }
         if (Input.GetKeyUp("2"))
         {
-            weaponState = 2;
-            ButtonSound.PlayOneShot(ButtonPress);
+            if (gun1)
+            {
+                weaponState = 2;
+                ButtonSound.PlayOneShot(ButtonPress);
+            }
+        }
+        if (Input.GetKeyUp("3"))
+        {
+            if (gun2)
+            {
+                weaponState = 3;
+                ButtonSound.PlayOneShot(ButtonPress);
+            }
         }
 
         if (weaponState == 1)
@@ -71,6 +104,18 @@ public class PlayerWeapons : MonoBehaviour {
             gun_A.color = Color.black;
         }
 
+    }
+
+    public void EnableRifle()
+    {
+        gun1 = true;
+        gun_B.enabled = true;
+    }
+
+    public void EnableSpread()
+    {
+        gun2 = true;
+        gun_B.enabled = true;
     }
 
 }

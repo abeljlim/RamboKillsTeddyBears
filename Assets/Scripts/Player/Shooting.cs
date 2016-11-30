@@ -3,10 +3,10 @@ using System.Collections;
 
 public class Shooting : MonoBehaviour {
 
-    public float shootingFrequency = 10f;
+    public int shootingFrequency = 40;
     public float attackRange = 100;
 
-    private float timer;
+    private int timer;
 
     private ParticleSystem bulletParticles;
     private LineRenderer bulletLine;
@@ -24,12 +24,22 @@ public class Shooting : MonoBehaviour {
         bulletLine = GetComponent<LineRenderer>();
         FireSoundEffect = GetComponent<AudioSource>();
         bulletLightEffects = GetComponent<Light>();
+        timer = 0;
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        timer += Time.deltaTime;
+        timer++;
+
+        if (PlayerWeapons.weaponState == 1)
+        {
+            shootingFrequency = 40;
+        }
+        else if ((PlayerWeapons.weaponState == 2) || (PlayerWeapons.weaponState == 3))
+        {
+            shootingFrequency = 10;
+        }
 
         if (Input.GetButton("Fire1") && timer >= shootingFrequency)
         {
@@ -50,7 +60,7 @@ public class Shooting : MonoBehaviour {
 
     private void Shoot()
     {
-        timer = 0f;
+        timer = 0;
 
         bulletLightEffects.enabled = true;
 
@@ -63,20 +73,20 @@ public class Shooting : MonoBehaviour {
 
         FireSoundEffect.Play();
 
-        if (PlayerWeapons.weaponState == 1)
+        if ((PlayerWeapons.weaponState == 1) || (PlayerWeapons.weaponState == 2))
         {
             //Fire a bullet projectile
             GameObject CurrPlayerBullet = Instantiate(Resources.Load("PlayerBullet"), transform.position + transform.forward * 1, Quaternion.identity) as GameObject;
             if (!PlayerWeapons.skill_on)
             {
-                CurrPlayerBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 200);
+                CurrPlayerBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
             }else
             {
                 CurrPlayerBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
             }
         }
 
-        if (PlayerWeapons.weaponState == 2)
+        if (PlayerWeapons.weaponState == 3)
         {
             GameObject CurrPlayerBullet1 = Instantiate(Resources.Load("PlayerBullet"), transform.position + transform.right * 1, Quaternion.identity) as GameObject;
             
@@ -84,8 +94,8 @@ public class Shooting : MonoBehaviour {
             GameObject CurrPlayerBullet2 = Instantiate(Resources.Load("PlayerBullet"), transform.position + transform.right * -1, Quaternion.identity) as GameObject;
             if (!PlayerWeapons.skill_on)
             {
-                CurrPlayerBullet1.GetComponent<Rigidbody>().AddForce(transform.forward * 200);
-                CurrPlayerBullet2.GetComponent<Rigidbody>().AddForce(transform.forward * 200);
+                CurrPlayerBullet1.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+                CurrPlayerBullet2.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
             }
             else
             {

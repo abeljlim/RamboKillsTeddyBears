@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MenuControl : MonoBehaviour {
-    
+public class MainMenu : MonoBehaviour {
+
 	// Use this for initialization
 	void Start () {
 	
@@ -13,8 +13,15 @@ public class MenuControl : MonoBehaviour {
 	
 	}
 
-    public void PlayButtonOnClick()
+    // Start a game
+    public void BeginGame()
     {
         Application.LoadLevel("Survival Game");
+    }
+
+    // Quit the game
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

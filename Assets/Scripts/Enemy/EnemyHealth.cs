@@ -113,7 +113,9 @@ public class EnemyHealth : MonoBehaviour {
         capsuleCollider.isTrigger = true; //make the enemy intangible
         Destroy ( rigidBody );
         nav.enabled = false;
+
         MoneyManager.money += 20;
+
         Destroy ( gameObject , 0.75f);
     }
 
@@ -125,8 +127,11 @@ public class EnemyHealth : MonoBehaviour {
     {
         if (other.gameObject.CompareTag ( "PlayerBullet" ))
         {
-            //Debug.Log ( "Collision" );
-            TakeDamage ( 40 );
+            if (WaveManager.isDay == true)
+                //Debug.Log ( "Collision" );
+                TakeDamage(100);
+            else
+                TakeDamage(50);
         }
     }
 }
