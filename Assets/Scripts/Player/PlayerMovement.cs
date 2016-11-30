@@ -113,11 +113,11 @@ public class PlayerMovement : MonoBehaviour {
             // Create a vector from the player to the point on the floor the raycast from the mouse hit
             // Actually, the result is not the hitpoint, little farther but the direction is the same
             Vector3 playerToHitPoint = groundHit.point - transform.position;
-
+            
             playerToHitPoint.y = 0f;
             // Create a quaternion (rotation) based on looking down the vector from the player to the mouse.
             Quaternion newRotation = Quaternion.LookRotation(playerToHitPoint);
-            
+
             // Operate Player to Rotate
             playerRigidbody.MoveRotation(newRotation);
         }

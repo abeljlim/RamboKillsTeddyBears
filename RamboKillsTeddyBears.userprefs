@@ -1,0 +1,12 @@
+﻿<Properties StartupItem="RamboKillsTeddyBears.CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Enemy\EnemyMovement.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Enemy\EnemyMovement.cs" Line="365" Column="52" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
