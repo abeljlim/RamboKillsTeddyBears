@@ -388,7 +388,7 @@ namespace Kernel
 
 
         [DllImport("DLLTEST", CallingConvention = CallingConvention.Cdecl)]
-        private static extern vector3 GetUnNormalizedSeparationVector(int objCount, float[] objectPos_x, float[] objectPos_y, float[] objectPos_z, vector3 currPos, StringBuilder errorMsgCCode); //can't pass reference types? Including string?
+        private static extern vector3 GetUnNormalizedSeparationVector(int objCount, float[] objectPos_x, float[] objectPos_y, float[] objectPos_z, vector3 currPos); //can't pass reference types? Including string?
 
         public static void runOnce()
         {
@@ -478,11 +478,11 @@ namespace Kernel
                 s += enemyPosBuf_x[i2] + ", ";
             }*/
             //Debug.Log(s);
-            StringBuilder errorMsg = new StringBuilder(1024);
+            //StringBuilder errorMsg = new StringBuilder(1024);
             //transform.position.x = 0;
             vector3 currPos = new vector3 {x = transform.position.x, y = transform.position.y, z = transform.position.z };
             Profiler.BeginSample("C++Code");
-            vector3 SeparationVec = /*new vector3 { x = 0.01f, y = 0.01f, z = 0.01f };  */GetUnNormalizedSeparationVector(enemies.Length, enemyPosBuf_x, enemyPosBuf_y, enemyPosBuf_z, currPos, errorMsg);
+            vector3 SeparationVec = /*new vector3 { x = 0.01f, y = 0.01f, z = 0.01f };  */GetUnNormalizedSeparationVector(enemies.Length, enemyPosBuf_x, enemyPosBuf_y, enemyPosBuf_z, currPos);
             Profiler.EndSample();
             //vector3 SeparationVec = new Kernel.EnemyMovement.vector3 { x = 0, y = 0, z = 0};
             //Debug.Log(SeparationVec.x + ", " + SeparationVec.y + ", " + SeparationVec.z);

@@ -416,7 +416,7 @@ void Debuging(cl_command_queue commandQueue, cl_kernel kernel)
 	}
 
 //gets total mass and count, and converts that into an un-normalized avoidance or separation vector
-__declspec(dllexport) vector3 GetUnNormalizedSeparationVector(int objCount, float* objectPos_x, float* objectPos_y, float* objectPos_z, vector3 currPos, char* errorMsgCCode)
+__declspec(dllexport) vector3 GetUnNormalizedSeparationVector(int objCount, float* objectPos_x, float* objectPos_y, float* objectPos_z, vector3 currPos)
 {
 	//code done in parallel
 	//pass the currPos vector to an array
@@ -471,8 +471,6 @@ __declspec(dllexport) vector3 GetUnNormalizedSeparationVector(int objCount, floa
 	//End of KernelCompiler code
 
 	//run kernel stuff - the TestOpenCL function - on each 'processing element' in parallel?
-
-	//totalSize = pow(2, objCountPow2); //total array size
 	size_t globalWorkSize[1] = { totalSize };
 	size_t localWorkSize[1] = { 1 }; //only work on the left side
 	status = clEnqueueNDRangeKernel(_commandQueue_GPU, _kernel_GPU, 1, NULL, globalWorkSize, localWorkSize, 0, NULL, NULL);
@@ -494,10 +492,10 @@ __declspec(dllexport) vector3 GetUnNormalizedSeparationVector(int objCount, floa
 	delete [] totalVecPos;
 	delete [] neighbourCount;
 	//CleanUp(_memoryBuffer, _deviceIds, _context, _commandQueue_GPU, _program, _kernel_GPU);
-	for (int i = 0; i < 6; i++)
+	/*for (int i = 0; i < 6; i++)
 	{
 		clReleaseMemObject(_memoryBuffer[i]);
-	}
+	}*/
 	//return normalized weighted sum of separation (normalized in C# code)
-	return vector3{ normVecPos_x, normVecPos_y, normVecPos_z };
+	return vector3{ 0.11f, 0.001f, -0.01f };
 }
