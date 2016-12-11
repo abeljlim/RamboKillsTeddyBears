@@ -419,20 +419,6 @@ void Debuging(cl_command_queue commandQueue, cl_kernel kernel)
 __declspec(dllexport) vector3 GetUnNormalizedSeparationVector(int objCount, float* objectPos_x, float* objectPos_y, float* objectPos_z, vector3 currPos, char* errorMsgCCode)
 {
 	//code done in parallel
-	/*
-	//errorMsg = "nothing";
-	//errorMsgCCode = "nothing"; //assigns a value< - not an address of the string literal -> to address, as opposed to a constructor?
-	_errorMsgCCode = errorMsgCCode;
-	//strcpy(_errorMsgCCode, "nothing");
-	//errorMsgCCode[0] = 'n';
-	//errorMsgCCode[1] = '\0';
-	/*if (errorMsgCCode[0] == 'n') {
-	return vector3{10, 5, 1};
-	}*/
-	//strcpy(errorMsgCCode, "nothing");
-	//_errorMsgCCode = errorMsgCCode;
-
-	//return vector3{1, 2, 3};
 	//pass the currPos vector to an array
 	float* currPosArr = new float[3];
 	currPosArr[0] = currPos.x;
@@ -447,74 +433,20 @@ __declspec(dllexport) vector3 GetUnNormalizedSeparationVector(int objCount, floa
 	totalVecPos[2] = 0;
 
 	const char* filePath = "Assets/DLLs/DLLTEST/DLLTEST/TestK.cl";
-	//_objCountPow2 = objCountPow2; //the lowest power of 2 that can fit all of the enemies; is number of divisions done in the buffer
-	//_objectPos_x = objectPos_x; //array of objectPos positions (x,y,z collectively corresponding to a vector)
-	//_objectPos_y = objectPos_y;
-	//_objectPos_z = objectPos_z;
-
-	//cl_platform_id *platformIds;
-	//cl_device_id *deviceIds;
-	//cl_context context;
-	//cl_kernel kernel;
-
-	////openCL - GPU
-	//cl_command_queue commandQueue_GPU, commandQueue_CPU;
-	//cl_kernel kernel_GPU_Init, kernel_CPU;
-
-	//_errorMsgCCode = "nothing";
-	//series
 
 	if(_platformIds == NULL) {
 		_platformIds = GeneratePlatform();
-	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, NULL))
-	//	return vector3{ 10, 5, 1 };
-
-	//PlatformInfo(platformIds);
-	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, NULL))
-	//	return vector3{ 10, 5, 1 };
-
 
 	//set up OpenCL code on GPU
 		_deviceIds = SetupCPUDevice(_platformIds[0]); //includes a malloc of a cl_device_id to deviceIds, and some printing of the number of devices in the platform ...
-	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-	//	return vector3{ 10, 5, 1 };
-
-	//DeviceInfo(platformIds[1], deviceIds[0]); //assign device to platform?
-	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-	//	return vector3{ 10, 5, 1 };
-	//if(_context == NULL)
 		_context = GenerateContext(_deviceIds); //generate context for device?
-	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-	//	return vector3{ 10, 5, 1 };
-
-	//if(_commandQueue_GPU == NULL)
 		_commandQueue_GPU = GenerateCommandQueue(_context, _deviceIds[0]); //noting commandQueue ... calls clCreateCommandQueue <with error handling> //being used to enqueue commands? For this current device at index 0
-	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-	//	return vector3{ 10, 5, 1 };
-	//if(_program == NULL)
 		_program = ProgramObject(filePath, _context); //set up kernel - Test.cl - for this current device
-	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-	//	return vector3{ 10, 5, 1 };
-	//if (!programCompiled) {
 		programCompiled = true;
 		Compiler(_program); //calls clBuildProgram, which builds a program executable?
-	//}
-	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-	//	return vector3{ (float)status, 5, 1 };
-	//kernel_GPU_Init = KernelMemory_Init(context, program); //calls  clCreateKernel for this - creating a kernel, ie. a function <removed here: called>declared within a program
-	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, NULL))
-	//	return vector3{ 10, 5, 1 };
-	//if(_kernel_GPU == NULL)
 		_kernel_GPU = KernelMemory(_context, _program); //calls  clCreateKernel for this - creating a kernel, ie. a function <removed here: called>declared within a program
 	}
-	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-	//	return vector3{ 10, 5, 1 };
-	//will want to do KernelCompiler for both kernel_GPU and kernel_GPU_Init kernels
-	//KernelCompiler(context, kernel_GPU, objectPos_x, objectPos_y, objectPos_z, objCountPow2); //looking at ...
-
 	//start of KernelCompiler code
-	//int i = 0;
-	//int totalSize = pow(2, objCountPow2);
 	int totalSize = objCount;
 
 	//Make R\W buffers? For the current kernel for the current context? For what device
@@ -525,208 +457,47 @@ __declspec(dllexport) vector3 GetUnNormalizedSeparationVector(int objCount, floa
 	_memoryBuffer[4] = clCreateBuffer(_context, CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, 3 * sizeof(float), totalVecPos, NULL);
 	_memoryBuffer[5] = clCreateBuffer(_context, CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, 1 * sizeof(int), neighbourCount, NULL);
 
-	//Handle if a memoryBuffer element would be null - print an error...
-	//for each (cl_mem memObjects in memoryBuffer)
-	//{
-	//	if (memObjects == NULL) {
-	//		printf("Error %d : creating memory objects \n", i);
-	//		strcpy(_errorMsgCCode, "Error %d : creating memory objects \n");
-	//		if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-	//			return vector3{ 10, 5, 1 };
-	//	}
-	//	i++;
-	//}
+	//Removed from here: Handle if a memoryBuffer element would be null - print an error...
 
 	//set the kernel arguments to be *arg_value <- in this case, with memoryBuffer[...] being the *arg_value>
 	//kernel arguments being for 
 	status = clSetKernelArg(_kernel_GPU, 0, sizeof(cl_mem), &_memoryBuffer[0]);
-	/*if (status != CL_SUCCESS) {
-		printf("Error in clSetKernelArg for Kernel_GPU \n");
-		strcpy(_errorMsgCCode, "Error in clSetKernelArg for Kernel_GPU 0 \n");
-		if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-			return vector3{ (float)status, 5, 1 };
-	}*/
 	status |= clSetKernelArg(_kernel_GPU, 1, sizeof(cl_mem), &_memoryBuffer[1]);
-	/*if (status != CL_SUCCESS) {
-		printf("Error in clSetKernelArg for Kernel_GPU \n");
-		strcpy(_errorMsgCCode, "Error in clSetKernelArg for Kernel_GPU 1 \n");
-		if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-			return vector3{ (float)status, 5, 1 };
-	}*/
 	status |= clSetKernelArg(_kernel_GPU, 2, sizeof(cl_mem), &_memoryBuffer[2]);
-	/*if (status != CL_SUCCESS) {
-		printf("Error in clSetKernelArg for Kernel_GPU \n");
-		strcpy(_errorMsgCCode, "Error in clSetKernelArg for Kernel_GPU 2 \n");
-		if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-			return vector3{ (float)status, 5, 1 };
-	}*/
 	status |= clSetKernelArg(_kernel_GPU, 3, sizeof(cl_mem), &_memoryBuffer[3]);
-	/*if (status != CL_SUCCESS) {
-		printf("Error in clSetKernelArg for Kernel_GPU \n");
-		strcpy(_errorMsgCCode, "Error in clSetKernelArg for Kernel_GPU 3 \n");
-		if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-			return vector3{ (float)status, 5, 1 };
-	}*/
 	status |= clSetKernelArg(_kernel_GPU, 4, sizeof(cl_mem), &_memoryBuffer[4]);
-	/*if (status != CL_SUCCESS) {
-		printf("Error in clSetKernelArg for Kernel_GPU \n");
-		strcpy(_errorMsgCCode, "Error in clSetKernelArg for Kernel_GPU 4 \n");
-		if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-			return vector3{ (float)status, 5, 1 };
-	}*/
 	status |= clSetKernelArg(_kernel_GPU, 5, sizeof(cl_mem), &_memoryBuffer[5]);
-	/*if (status != CL_SUCCESS) {
-		printf("Error in clSetKernelArg for Kernel_GPU \n");
-		strcpy(_errorMsgCCode, "Error in clSetKernelArg for Kernel_GPU 5 \n");
-		if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-			return vector3{ (float)status, 5, 1 };
-	}*/
-
-
-	/*
-	status = clSetKernelArg(kernel_GPU_Init, 0, sizeof(cl_mem), &memoryBuffer[0]);
-	status |= clSetKernelArg(kernel_GPU_Init, 1, sizeof(cl_mem), &memoryBuffer[1]);
-	status |= clSetKernelArg(kernel_GPU_Init, 2, sizeof(cl_mem), &memoryBuffer[2]);
-	status |= clSetKernelArg(kernel_GPU_Init, 3, sizeof(cl_mem), &memoryBuffer[3]);
-
-	if (status != CL_SUCCESS) {
-	printf("Error in clSetKernelArg for Kernel_GPU_Init \n");
-	strcpy(_errorMsgCCode, "Error in clSetKernelArg \n");
-	}*/
 
 	//End of KernelCompiler code
-	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-	//	return vector3{ 10, 5, 1 };
 
 	//run kernel stuff - the TestOpenCL function - on each 'processing element' in parallel?
-	//Debuging(commandQueue_GPU, kernel_GPU); //call clEnqueueNDRangeKernel and clEnqueueReadBuffer to enqueue kernel commands to the command queue for the given buffer <<with the respective work size><YKWIM>>
 
 	//totalSize = pow(2, objCountPow2); //total array size
 	size_t globalWorkSize[1] = { totalSize };
 	size_t localWorkSize[1] = { 1 }; //only work on the left side
-
-									 //running code
-									 //int smallestPow2 = ceil(Mathf.log2(enemies.Length));
-									 //int array[smallestPow2] = { 0 };
-
-									 //have _objectPos array or buffer, and pow(2, _objCountPow2) as size, with _objCountPow2 as number of layers of summing to be done
-									 //int numSumComboSteps = objCountPow2;
-
 	status = clEnqueueNDRangeKernel(_commandQueue_GPU, _kernel_GPU, 1, NULL, globalWorkSize, localWorkSize, 0, NULL, NULL);
-	/*if (status != CL_SUCCESS) {
-		printf("Error in clEnqueueNDRangeKernel \n");
-		strcpy(_errorMsgCCode, "Error in clEnqueueNDRangeKernel \n");
-		return vector3{ 1,1,1 };*/
 
-		//for (int step = 0; step < numSumComboSteps; step++) { //merge the two halves each step, eventually getting to one final element each
-		/*
-		//queue the kernel up for execution across the array of globalWorkSize
-		if (step == 0) {
-		status = clEnqueueNDRangeKernel(commandQueue_GPU, kernel_GPU_Init, 1, NULL, globalWorkSize, localWorkSize, 0, NULL, NULL);
-		if (status != CL_SUCCESS) {
-		printf("Error in clEnqueueNDRangeKernel \n");
-		strcpy(_errorMsgCCode, "Error in clEnqueueNDRangeKernel \n");
-		return vector3{ 1,1,1 };
-		}
-		}
-		else {*/
-		//status = clEnqueueNDRangeKernel(commandQueue, kernel_GPU, 1, NULL, globalWorkSize, localWorkSize, 0, NULL, NULL);
-		//if (status != CL_SUCCESS) {
-		//	printf("Error in clEnqueueNDRangeKernel \n");
-		//	strcpy(_errorMsgCCode, "Error in clEnqueueNDRangeKernel \n");
-		//	return vector3{ 1,1,1 };/*
-		//}
-		//}*/
-
-
-		//read the output buffer back to the Host in result
-		//status = clEnqueueReadBuffer(commandQueue, memoryBuffer[2], CL_TRUE, 0, arraySize * sizeof(float), result, 0, NULL, NULL); //memoryBuffer[2] is the result
-		/*if (status != CL_SUCCESS) {
-		printf("Error in clEnqueueReadBuffer \n");
-		strcpy(_errorMsgCCode, "Error in clEnqueueReadBuffer \n");
-		return;
-		}*/
-		//		totalSize = objCount; //total array size
-		//globalWorkSize[0] /= 2; //work on just half
-	//}
-
-	//read the memoryBuffers into the respective objectPos arrays again
-	/*status = clEnqueueReadBuffer(commandQueue_GPU, memoryBuffer[0], CL_TRUE, 0, 1, objectPos_x, 0, NULL, NULL);
-	if (status != CL_SUCCESS) {
-	strcpy(errorMsgCCode, "Error in clEnqueueNDRangeKernel \n");
-	return vector3{ 1,1,1 };
-	}
-	status = clEnqueueReadBuffer(commandQueue_GPU, memoryBuffer[1], CL_TRUE, 0, 1, objectPos_y, 0, NULL, NULL);
-	if (status != CL_SUCCESS) {
-	strcpy(errorMsgCCode, "Error in clEnqueueNDRangeKernel \n");
-	return vector3{ 1,1,1 };
-	}
-	status = clEnqueueReadBuffer(commandQueue_GPU, memoryBuffer[2], CL_TRUE, 0, 1, objectPos_z, 0, NULL, NULL);
-	if (status != CL_SUCCESS) {
-	strcpy(errorMsgCCode, "Error in clEnqueueNDRangeKernel \n");
-	return vector3{ 1,1,1 };
-	}*/
-
-	//get final totalVecPos and neighbourCount
+	//read the memoryBuffers into the respective objectPos arrays again - get final totalVecPos and neighbourCount
 	status = clEnqueueReadBuffer(_commandQueue_GPU, _memoryBuffer[4], CL_TRUE, 0, 3 * sizeof(float), totalVecPos, 0, NULL, NULL);
-	/*if (status != CL_SUCCESS) {
-		strcpy(errorMsgCCode, "Error in clEnqueueNDRangeKernel \n");
-		return vector3{ 1,1,1 };
-	}*/
 	status = clEnqueueReadBuffer(_commandQueue_GPU, _memoryBuffer[5], CL_TRUE, 0, 1 * sizeof(int), neighbourCount, 0, NULL, NULL);
-	/*if (status != CL_SUCCESS) {
-		strcpy(errorMsgCCode, "Error in clEnqueueNDRangeKernel \n");
-		return vector3{ 1,1,1 };
-	}*/
-	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
-	//	return vector3{ 10, 5, 1 };
-
-	/*
-	//free all of the allocated memory
-	clReleaseMemObject(memoryBuffer[0]);
-	clReleaseMemObject(memoryBuffer[1]);
-	clReleaseMemObject(memoryBuffer[2]);
-	clReleaseMemObject(memoryBuffer[3]);
-	clReleaseMemObject(memoryBuffer[4]);
-	clReleaseMemObject(memoryBuffer[5]);*/
-	/*gcl_free(memoryBuffer[0]);
-	gcl_free(memoryBuffer[1]);
-	gcl_free(memoryBuffer[2]);
-	gcl_free(memoryBuffer[3]);
-	*/
-	/*
-	free(memoryBuffer[0]);
-	free(memoryBuffer[1]);
-	free(memoryBuffer[2]);
-	free(memoryBuffer[3]);
-	free(memoryBuffer[4]);
-	free(memoryBuffer[5]);
-	*/
-
+	
 	//handle neighbours, taking into account potential division by zero if zero neighbours
 	int neighbourCountInt = neighbourCount[0];
-	//float vecPos_x = totalVecPos[0];
-	//float vecPos_y = totalVecPos[1];
 
 	//(current pos - (center of mass coords)) providing the separation vector
 	float normVecPos_x = (neighbourCountInt != 0) ? (currPosArr[0] - (totalVecPos[0] / neighbourCountInt)) : 0;
 	float normVecPos_y = (neighbourCountInt != 0) ? (currPosArr[1] - (totalVecPos[1] / neighbourCountInt)) : 0;
 	float normVecPos_z = (neighbourCountInt != 0) ? (currPosArr[2] - (totalVecPos[2] / neighbourCountInt)) : 0;
 
+	//free all of the allocated memory
 	delete [] currPosArr;
 	delete [] totalVecPos;
 	delete [] neighbourCount;
-	//free(_errorMsgCCode); //not allocated in C++ but rather in C#'s StringBuilder
-
 	//CleanUp(_memoryBuffer, _deviceIds, _context, _commandQueue_GPU, _program, _kernel_GPU);
 	for (int i = 0; i < 6; i++)
 	{
 		clReleaseMemObject(_memoryBuffer[i]);
 	}
-	/*free(_platformIds);
-	if (deviceIds != NULL)
-		free(_deviceIds);
-	*/
 	//return normalized weighted sum of separation (normalized in C# code)
 	return vector3{ normVecPos_x, normVecPos_y, normVecPos_z };
 }
