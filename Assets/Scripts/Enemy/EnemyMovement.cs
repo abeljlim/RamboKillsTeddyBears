@@ -446,7 +446,19 @@ namespace Kernel
 
             //int enemyCountPow2 = (int)(Mathf.Ceil(Mathf.Log(enemies.Length, 2))); //smallest power of 2 that would fit enemies.Length
             //int totalSize = (int)(Mathf.Pow(2, enemyCountPow2));
-            int[] neighbourCountBuf = new int[enemies.Length];
+            Profiler.BeginSample("AddToBuffersForGetUnNormalized...C++Code"); //the code - to avoid this <<copying><YKWIM>>, may have to somehow point to each vector and its respective x, y, and z values through the GameObject[] array, where the same order could be stored between these ... for the enemies ...
+            //can figure out the memory locations of each ... well, variable ... for the class ... well, could get the difference in memory address for one relative to the beginning of the class memory allocation or such, dereference such, and then get the memory locations of each of the variables
+            //and then use those respective offsets
+            //however, these would still be necessary to copy to the buffer for OpenCL ...
+            //so, to handle this ... maybe the tree for doing collision detection may be what would be intended in parallelizing collision detection - with noting how collision detection would not really involve much to be parallelized ... ie. each thing to be parallelized would take not that many instructions, with comparability to setting up a buffer ...
+            //so, parallelizing may be for things that require a good amount of computation ... in parallelizing such relative to each position to compare to ...
+            //maybe could update this buffer globally, rather than per enemy. So, would basically update each enemyPosBuf for the respective enemy, each having its own ID, on each frame, each enemy having its own ID
+            //or, could use a List, which could be used ...well, would need to handle such contiguous memory ...
+            //and would have to check to see that the enemy position would still be a valid one, in tracking such ... well, could always move a later enemy <or not move anything if there would not be anything in front of the current enemy> on the destroy() code of the buffer, and update the count of the buffer ...
+            //and update the enemy buffer ID for the moved enemy as well, with keeping track of the ID of the enemy that would be at the end of <removed here: he bu>the buffer
+            //So, it would be O(1) with such copying of another enemy to the current position, and O(n) <<across all enemies><YKWIM>>, rather than O(n^2)<<noting following " for updating" writing being written later, and this curr. "<<noting following...>...>" angled bracketed writing being written later: >< - note this is as I understand it to mean>> for updating
+            //and alternatively, could construct a tree <removed here: in OpenCL >with said enemies' maint<removed here: a>enance of the tree
+            //int[] neighbourCountBuf = new int[enemies.Length]; //<noted at 7:<removed here: 45>24-25PM<removed here: : never used>, as of 12/10/16 ...: never used>
             float[] enemyPosBuf_x = new float[enemies.Length];
             float[] enemyPosBuf_y = new float[enemies.Length];
             float[] enemyPosBuf_z = new float[enemies.Length];
@@ -459,6 +471,7 @@ namespace Kernel
                 enemyPosBuf_z[i] = enemy.transform.position.z;
                 i++;
             }
+            Profiler.EndSample();
             /*string s = "";
             for(int i2=0; i2<enemyPosBuf_x.Length; i2++)
             {
@@ -468,18 +481,21 @@ namespace Kernel
             StringBuilder errorMsg = new StringBuilder(1024);
             //transform.position.x = 0;
             vector3 currPos = new vector3 {x = transform.position.x, y = transform.position.y, z = transform.position.z };
-            vector3 SeparationVec = GetUnNormalizedSeparationVector(enemies.Length, enemyPosBuf_x, enemyPosBuf_y, enemyPosBuf_z, currPos, errorMsg);
+            Profiler.BeginSample("C++Code");
+            vector3 SeparationVec = /*new vector3 { x = 0.01f, y = 0.01f, z = 0.01f };  */GetUnNormalizedSeparationVector(enemies.Length, enemyPosBuf_x, enemyPosBuf_y, enemyPosBuf_z, currPos, errorMsg);
+            Profiler.EndSample();
             //vector3 SeparationVec = new Kernel.EnemyMovement.vector3 { x = 0, y = 0, z = 0};
-            Debug.Log(SeparationVec.x + ", " + SeparationVec.y + ", " + SeparationVec.z);
+            //Debug.Log(SeparationVec.x + ", " + SeparationVec.y + ", " + SeparationVec.z);
             //vector3 SeparationVecTest = GetUnNormalizedSeparationVector(enemies.Length, enemyPosBuf_x, enemyPosBuf_y, enemyPosBuf_z, currPos, errorMsg);
-            Debug.Log(errorMsg.ToString());
+            //Debug.Log(errorMsg.ToString());
             //Debug.Log("SeparationVecTest: " + SeparationVecTest.x + ", " + SeparationVecTest.y + ", " + SeparationVecTest.z);
             Vector3 SeparationVecNorm = new Vector3(SeparationVec.x, SeparationVec.y, SeparationVec.z).normalized;
             //GetNeighbourMassAndCount()
             /*
             clCreateProgramWithSource()
             */
-            /*
+
+            Profiler.BeginSample("SerialTracking"); 
            foreach (GameObject otherEnemy in enemies) //this loop as being something that can be done in parallel, or basically tracking all of such that can be done in parallel - so, adding corresponding parallel code for this ... from OPAS2 and median_filterlab
            {
                Vector3 enemyPos = otherEnemy.transform.position;
@@ -492,9 +508,10 @@ namespace Kernel
 
            //get center of mass - position to avoid or flee from
            Vector3 CenterOfMass = totalMass / neighbourCount;
-           Vector3 SeparationDir = transform.position - CenterOfMass;
-           SeparationDir.Normalize();
-           */
+           SeparationVecNorm = transform.position - CenterOfMass;
+           SeparationVecNorm.Normalize();
+            Profiler.EndSample();
+           
             //add this as 1/3 the magnitude of path following weight
             //Profiler.BeginSample("PathFollowingVec()");
 

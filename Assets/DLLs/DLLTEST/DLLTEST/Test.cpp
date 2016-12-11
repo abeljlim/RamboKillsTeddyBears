@@ -416,7 +416,6 @@ void Debuging(cl_command_queue commandQueue, cl_kernel kernel)
 	}
 
 //gets total mass and count, and converts that into an un-normalized avoidance or separation vector
-//gets total mass and count, and converts that into an un-normalized avoidance or separation vector
 __declspec(dllexport) vector3 GetUnNormalizedSeparationVector(int objCount, float* objectPos_x, float* objectPos_y, float* objectPos_z, vector3 currPos, char* errorMsgCCode)
 {
 	//code done in parallel
@@ -431,7 +430,7 @@ __declspec(dllexport) vector3 GetUnNormalizedSeparationVector(int objCount, floa
 	return vector3{10, 5, 1};
 	}*/
 	//strcpy(errorMsgCCode, "nothing");
-	_errorMsgCCode = errorMsgCCode;
+	//_errorMsgCCode = errorMsgCCode;
 
 	//return vector3{1, 2, 3};
 	//pass the currPos vector to an array
@@ -465,7 +464,7 @@ __declspec(dllexport) vector3 GetUnNormalizedSeparationVector(int objCount, floa
 	//_errorMsgCCode = "nothing";
 	//series
 
-	if(_platformIds == NULL)
+	if(_platformIds == NULL) {
 		_platformIds = GeneratePlatform();
 	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, NULL))
 	//	return vector3{ 10, 5, 1 };
@@ -476,8 +475,6 @@ __declspec(dllexport) vector3 GetUnNormalizedSeparationVector(int objCount, floa
 
 
 	//set up OpenCL code on GPU
-
-	if(_deviceIds == NULL)
 		_deviceIds = SetupCPUDevice(_platformIds[0]); //includes a malloc of a cl_device_id to deviceIds, and some printing of the number of devices in the platform ...
 	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
 	//	return vector3{ 10, 5, 1 };
@@ -485,37 +482,38 @@ __declspec(dllexport) vector3 GetUnNormalizedSeparationVector(int objCount, floa
 	//DeviceInfo(platformIds[1], deviceIds[0]); //assign device to platform?
 	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
 	//	return vector3{ 10, 5, 1 };
-	if(_context == NULL)
+	//if(_context == NULL)
 		_context = GenerateContext(_deviceIds); //generate context for device?
 	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
 	//	return vector3{ 10, 5, 1 };
 
-	if(_commandQueue_GPU == NULL)
+	//if(_commandQueue_GPU == NULL)
 		_commandQueue_GPU = GenerateCommandQueue(_context, _deviceIds[0]); //noting commandQueue ... calls clCreateCommandQueue <with error handling> //being used to enqueue commands? For this current device at index 0
 	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
 	//	return vector3{ 10, 5, 1 };
-	if(_program == NULL)
+	//if(_program == NULL)
 		_program = ProgramObject(filePath, _context); //set up kernel - Test.cl - for this current device
 	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
 	//	return vector3{ 10, 5, 1 };
-	if (!programCompiled) {
+	//if (!programCompiled) {
 		programCompiled = true;
 		Compiler(_program); //calls clBuildProgram, which builds a program executable?
-	}
+	//}
 	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
 	//	return vector3{ (float)status, 5, 1 };
 	//kernel_GPU_Init = KernelMemory_Init(context, program); //calls  clCreateKernel for this - creating a kernel, ie. a function <removed here: called>declared within a program
 	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, NULL))
 	//	return vector3{ 10, 5, 1 };
-	if(_kernel_GPU == NULL)
+	//if(_kernel_GPU == NULL)
 		_kernel_GPU = KernelMemory(_context, _program); //calls  clCreateKernel for this - creating a kernel, ie. a function <removed here: called>declared within a program
+	}
 	//if (isErr(memoryBuffer, currPosArr, totalVecPos, neighbourCount, platformIds, deviceIds))
 	//	return vector3{ 10, 5, 1 };
 	//will want to do KernelCompiler for both kernel_GPU and kernel_GPU_Init kernels
 	//KernelCompiler(context, kernel_GPU, objectPos_x, objectPos_y, objectPos_z, objCountPow2); //looking at ...
 
 	//start of KernelCompiler code
-	int i = 0;
+	//int i = 0;
 	//int totalSize = pow(2, objCountPow2);
 	int totalSize = objCount;
 
@@ -720,7 +718,11 @@ __declspec(dllexport) vector3 GetUnNormalizedSeparationVector(int objCount, floa
 	delete [] neighbourCount;
 	//free(_errorMsgCCode); //not allocated in C++ but rather in C#'s StringBuilder
 
-	CleanUp(_memoryBuffer, _deviceIds, _context, _commandQueue_GPU, _program, _kernel_GPU);
+	//CleanUp(_memoryBuffer, _deviceIds, _context, _commandQueue_GPU, _program, _kernel_GPU);
+	for (int i = 0; i < 6; i++)
+	{
+		clReleaseMemObject(_memoryBuffer[i]);
+	}
 	/*free(_platformIds);
 	if (deviceIds != NULL)
 		free(_deviceIds);

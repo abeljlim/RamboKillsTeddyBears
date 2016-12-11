@@ -114,7 +114,16 @@ public class EnemyHealth : MonoBehaviour {
         Destroy ( rigidBody );
         nav.enabled = false;
         MoneyManager.money += 20;
+        //Can discard this current enemy's buffer for position as well here
+
         Destroy ( gameObject , 0.75f);
+        //or discard it here...
+    }
+
+    void OnDestroy()
+    {
+        //Debug.Log("Enemy destroyed at position ("+transform.position.x+", "+transform.position.y+", "+transform.position.z+")");
+        //can update buffer here
     }
 
     /// <summary>
