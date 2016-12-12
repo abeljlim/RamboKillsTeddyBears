@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (PlayerWeapons.skill_on)
+        if (PlayerWeapons.CurrSkill == PlayerWeapons.STIMPACK)
         {
             playerWalkSpeed = 0.5f;
         }
@@ -42,34 +42,37 @@ public class PlayerMovement : MonoBehaviour {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         
-        //For isometric movement - rotates movement angle to match the camera angle.
-        Transform CameraTransform = Camera.main.gameObject.transform;
-        float cameraYangle = CameraTransform.rotation.eulerAngles.y / 180 * Mathf.PI; //camera angle in radians
-        //Debug.Log ( cameraYangle );
-        Vector2 movementVec = new Vector2 ( horizontal, vertical );
-        if (!(vertical == 0 && horizontal == 0))
+        if (PlayerWeapons.CurrSkill != PlayerWeapons.BULLETFRENZY)
         {
-            float angle = Mathf.Atan2 ( vertical, horizontal );
-            angle -= cameraYangle;
-            float rotatedY = Mathf.Sin ( angle )*movementVec.magnitude;
-            float rotatedX = Mathf.Cos ( angle )*movementVec.magnitude;
-            /*
-            Vector3 moveDir;
-            if (vertical == 0)
+            //For isometric movement - rotates movement angle to match the camera angle.
+            Transform CameraTransform = Camera.main.gameObject.transform;
+            float cameraYangle = CameraTransform.rotation.eulerAngles.y / 180 * Mathf.PI; //camera angle in radians
+            //Debug.Log ( cameraYangle );
+            Vector2 movementVec = new Vector2 ( horizontal, vertical );
+            //do rotation, except during bullet frenzy state in which the player would be spinning
+            if (!(vertical == 0 && horizontal == 0))
             {
-               moveDir = new Vector3(rotatedX, 0, rotatedY);
+                float angle = Mathf.Atan2(vertical, horizontal);
+                angle -= cameraYangle;
+                float rotatedY = Mathf.Sin(angle) * movementVec.magnitude;
+                float rotatedX = Mathf.Cos(angle) * movementVec.magnitude;
+                /*
+                Vector3 moveDir;
+                if (vertical == 0)
+                {
+                   moveDir = new Vector3(rotatedX, 0, rotatedY);
+                }
+                else
+                {
+                   moveDir = new Vector3(rotatedX, 0, rotatedY);
+                }
+                transform.rotation = Quaternion.LookRotation(moveDir);*/
+                Movement(rotatedX, 0f, rotatedY);
             }
-            else
-            {
-               moveDir = new Vector3(rotatedX, 0, rotatedY);
-            }
-            transform.rotation = Quaternion.LookRotation(moveDir);*/
-            Movement ( rotatedX, 0f, rotatedY );
+
+            //Movement ( horizontal, 0f, vertical );
+            Rotation();
         }
-
-        //Movement ( horizontal, 0f, vertical );
-
-        Rotation();
     }
 
     void Movement(float x, float y, float z)

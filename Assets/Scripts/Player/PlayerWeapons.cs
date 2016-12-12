@@ -7,19 +7,29 @@ public class PlayerWeapons : MonoBehaviour {
     AudioSource ButtonSound;
     public Text gun_A, gun_B;
 
-    public Text skill, text_skill;
-    public static bool skill_on;
+    public Text skillTextImg, text_skill;
+    public Image StimPackImg, BulletFrenzyImg, AutoTurretImg;
+    public const int NONE = 0, STIMPACK = 1, BULLETFRENZY = 2, AUTOTURRET = 3;
+    public static int CurrSkill = NONE;
     public bool gun1, gun2, gun3, gun4;
-
-    private int skillTimer;
+    
+    private float skillTimer;
 
     public static int weaponState;
     public AudioClip ButtonPress;
+    public Shooting playerShooting;
+    public Slider skillPtsSlider;
+    public float SkillPts = 100;
+    public float skillPtsRegenRate = 2f; //regen per second
+    public int StimPackCost = 25;
+    public int BulletFrenzyCost = 25;
+    public int AutoTurretCost = 25;
 
     // Use this for initialization
     void Start() {
 
         ButtonSound = GetComponent<AudioSource>();
+        playerShooting = transform.GetChild(0).GetComponent<Shooting>(); //gets the BulletEffect's Shooting script
 
         skillTimer = 0;
 
@@ -29,11 +39,32 @@ public class PlayerWeapons : MonoBehaviour {
         gun4 = false;
 
         weaponState = 1;
-        skill_on = false;
+        CurrSkill = NONE;
     }
 
     // Update is called once per frame
     void Update() {
+
+        //Skill regen code
+        if(SkillPts < 100) //hardcoded as 100
+        {
+            SkillPts = Mathf.Min(SkillPts + skillPtsRegenRate * Time.deltaTime, 100);
+            Debug.Log(SkillPts);
+            skillPtsSlider.value = SkillPts;
+        }
+
+        if (SkillPts < StimPackCost && CurrSkill != STIMPACK)
+            StimPackImg.color = Color.grey;
+        else
+            StimPackImg.color = Color.white;
+        if (SkillPts < BulletFrenzyCost && CurrSkill != BULLETFRENZY)
+            BulletFrenzyImg.color = Color.grey;
+        else
+            BulletFrenzyImg.color = Color.white;
+        if (SkillPts < AutoTurretCost && CurrSkill != AUTOTURRET)
+            AutoTurretImg.color = Color.grey;
+        else
+            AutoTurretImg.color = Color.white;
 
         SkillSelected();
         GunSelected();
@@ -46,26 +77,111 @@ public class PlayerWeapons : MonoBehaviour {
 
     private void SkillSelected()
     {
-        if (Input.GetKeyUp("r") && skill_on == false)
+        //Stim Pack input
+        if (Input.GetKeyUp("e") && CurrSkill == NONE)
         {
-            skill_on = true;
+            if (SkillPts >= StimPackCost)
+            {
+                CurrSkill = STIMPACK;
+                SkillPts -= StimPackCost;
+                skillPtsSlider.value = SkillPts;
+            }
+            else
+            {
+                //some kind of indication that there would not be enough skill pts at the moment.
+            }
         }
 
-        if(skill_on)
+        //Bullet frenzy input
+        if (Input.GetKeyUp("r") && CurrSkill == NONE)
         {
-            skillTimer++;
-            if (skillTimer > 150)
-                skill_on = false;
+            if (SkillPts >= BulletFrenzyCost)
+            {
+                CurrSkill = BULLETFRENZY;
+                SkillPts -= BulletFrenzyCost;
+                skillPtsSlider.value = SkillPts; //update slider
+            }
+            else
+            {
+                //some kind of indication that there would not be enough skill pts at the moment.
+            }
         }
 
-        if (skill_on)
+        //Auto turret input
+        if (Input.GetKeyUp("t") && CurrSkill == NONE)
         {
-            text_skill.enabled = true;
-            skill.color = Color.black;
-        }else
+            if (SkillPts >= AutoTurretCost)
+            {
+                CurrSkill = AUTOTURRET;
+                SkillPts -= AutoTurretCost;
+                skillPtsSlider.value = SkillPts; //update slider
+            }
+            else
+            {
+                //some kind of indication that there would not be enough skill pts at the moment.
+            }
+        }
+
+        //active skill
+        if (CurrSkill != NONE)
         {
-            text_skill.enabled = false;
-            skill.color = Color.white;
+            skillTimer += Time.deltaTime;
+            //Stimpack skill
+            if (CurrSkill == STIMPACK)
+            {
+                if (skillTimer >= 5) //duration of stimpack is hardcoded as 5 here
+                {
+                    playerShooting.shootingDelayScale = 1.0f;
+                    CurrSkill = NONE;
+                    skillTimer = 0;
+                    skillTextImg.color = Color.white;
+                    StimPackImg.color = Color.white;
+                    text_skill.enabled = false;
+                }
+            }
+
+            if (CurrSkill == STIMPACK)
+            {
+                playerShooting.shootingDelayScale = 0.5f; //set to half
+                text_skill.enabled = true;
+                skillTextImg.color = Color.black;
+                StimPackImg.color = Color.red;
+            }
+
+            //Bullet frenzy skill
+            if (CurrSkill == BULLETFRENZY)
+            {
+                if (skillTimer >= 2) //hardcoded as 2 here
+                {
+                    playerShooting.shootingDelayScale = 1.0f; //end
+                    BulletFrenzyImg.color = Color.white;
+                    CurrSkill = NONE;
+                    skillTimer = 0;
+                }
+            }
+
+            if (CurrSkill == BULLETFRENZY)
+            {
+                BulletFrenzyImg.color = Color.red;
+                playerShooting.shootingDelayScale = 0.1f; //set to 5x speed
+                transform.RotateAround(transform.position, transform.up, Time.deltaTime * 720f);
+                //handle color is TBD
+                //text_skill.enabled = true;
+                //skill.color = Color.black;
+            }
+            //else
+            //{
+            //    //text_skill.enabled = false;
+            //    //skill.color = Color.white;
+            //}
+
+
+            if (CurrSkill == AUTOTURRET)
+            {
+                GameObject NewAutoTurret = Instantiate(Resources.Load("AutoTurretv2"), transform.position + transform.forward * 2, Quaternion.identity) as GameObject;
+                CurrSkill = NONE;
+                skillTimer = 0;
+            }
         }
     }
 

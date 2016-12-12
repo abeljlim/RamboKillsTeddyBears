@@ -3,10 +3,11 @@ using System.Collections;
 
 public class Shooting : MonoBehaviour {
 
-    public int shootingFrequency = 40;
+    public float shootingDelay = 0.66f;
+    public float shootingDelayScale = 1;
     public float attackRange = 100;
 
-    private int timer;
+    private float timer;
 
     private ParticleSystem bulletParticles;
     private LineRenderer bulletLine;
@@ -30,23 +31,23 @@ public class Shooting : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        timer++;
+        timer += Time.deltaTime;
 
         if (PlayerWeapons.weaponState == 1)
         {
-            shootingFrequency = 40;
+            shootingDelay = (0.66f * shootingDelayScale);
         }
         else if ((PlayerWeapons.weaponState == 2) || (PlayerWeapons.weaponState == 3))
         {
-            shootingFrequency = 10;
+            shootingDelay = (0.166f * shootingDelayScale);
         }
 
-        if (Input.GetButton("Fire1") && timer >= shootingFrequency)
+        if ((PlayerWeapons.CurrSkill == PlayerWeapons.BULLETFRENZY || Input.GetButton("Fire1")) && timer >= shootingDelay)
         {
             Shoot();
         }
 
-        if (timer >= shootingFrequency * effectDisplayTime)
+        if (timer >= shootingDelay * effectDisplayTime)
         {
             DisableEffect();
         }
@@ -77,7 +78,7 @@ public class Shooting : MonoBehaviour {
         {
             //Fire a bullet projectile
             GameObject CurrPlayerBullet = Instantiate(Resources.Load("PlayerBullet"), transform.position + transform.forward * 1, Quaternion.identity) as GameObject;
-            if (!PlayerWeapons.skill_on)
+            if (PlayerWeapons.CurrSkill == PlayerWeapons.NONE)
             {
                 CurrPlayerBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
             }else
@@ -90,9 +91,8 @@ public class Shooting : MonoBehaviour {
         {
             GameObject CurrPlayerBullet1 = Instantiate(Resources.Load("PlayerBullet"), transform.position + transform.right * 1, Quaternion.identity) as GameObject;
             
-
             GameObject CurrPlayerBullet2 = Instantiate(Resources.Load("PlayerBullet"), transform.position + transform.right * -1, Quaternion.identity) as GameObject;
-            if (!PlayerWeapons.skill_on)
+            if (PlayerWeapons.CurrSkill == PlayerWeapons.NONE)
             {
                 CurrPlayerBullet1.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
                 CurrPlayerBullet2.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
