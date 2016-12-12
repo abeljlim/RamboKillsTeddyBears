@@ -85,6 +85,13 @@ public class Shooting : MonoBehaviour {
             {
                 CurrPlayerBullet.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
             }
+
+            //Add behind bullet if during bullet frenzy
+            if(PlayerWeapons.CurrSkill == PlayerWeapons.BULLETFRENZY)
+            {
+                GameObject CurrPlayerBullet2 = Instantiate(Resources.Load("PlayerBullet"), transform.position - transform.forward * 1, Quaternion.identity) as GameObject;
+                CurrPlayerBullet2.GetComponent<Rigidbody>().AddForce(-transform.forward * 1000);
+            }
         }
 
         if (PlayerWeapons.weaponState == 3)
@@ -107,6 +114,14 @@ public class Shooting : MonoBehaviour {
             //GameObject CurrPlayerBullet2 = Instantiate(Resources.Load("PlayerBullet"), new Vector3(transform.position.x + 1, transform.position.y, transform.position.z + 1) + transform.forward * 1, Quaternion.identity) as GameObject;
             //CurrPlayerBullet1.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
             //CurrPlayerBullet2.GetComponent<Rigidbody>().AddForce(transform.forward * 1000);
+            //Add behind bullet if during bullet frenzy
+            if (PlayerWeapons.CurrSkill == PlayerWeapons.BULLETFRENZY)
+            {
+                GameObject CurrPlayerBullet3 = Instantiate(Resources.Load("PlayerBullet"), transform.position - transform.right * 1, Quaternion.identity) as GameObject;
+                CurrPlayerBullet3.GetComponent<Rigidbody>().AddForce(-transform.forward * 1000);
+                GameObject CurrPlayerBullet4 = Instantiate(Resources.Load("PlayerBullet"), transform.position - transform.right * -1, Quaternion.identity) as GameObject;
+                CurrPlayerBullet4.GetComponent<Rigidbody>().AddForce(-transform.forward * 1000);
+            }
         }
     }
 }

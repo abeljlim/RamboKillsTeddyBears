@@ -164,7 +164,7 @@ public class PlayerWeapons : MonoBehaviour {
             {
                 BulletFrenzyImg.color = Color.red;
                 playerShooting.shootingDelayScale = 0.1f; //set to 5x speed
-                transform.RotateAround(transform.position, transform.up, Time.deltaTime * 720f);
+                transform.RotateAround(transform.position, transform.up, Time.deltaTime * 360f);
                 //handle color is TBD
                 //text_skill.enabled = true;
                 //skill.color = Color.black;
