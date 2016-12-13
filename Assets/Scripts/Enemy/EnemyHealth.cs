@@ -104,11 +104,6 @@ public class EnemyHealth : MonoBehaviour {
         if (currHealth <= 0)
         {
             isDead = true;
-            if(isBoss)
-            {
-                //could do some death animation
-                BossKilled = true;
-            }
             Die ();
         }
     }
@@ -126,6 +121,15 @@ public class EnemyHealth : MonoBehaviour {
         MoneyManager.money += 20;
 
         Destroy ( gameObject , 0.75f);
+    }
+
+    void OnDestroy()
+    {
+        if (isBoss)
+        {
+            //could do some death animation
+            BossKilled = true;
+        }
     }
 
     /// <summary>
