@@ -13,7 +13,7 @@ public class MoneyManager : MonoBehaviour {
 
 	void Awake () {
         text = GetComponent<Text> (); //get the UI text
-        Debug.Log ( text );
+        //Debug.Log ( text );
         //money = 0;
         money = PlayerPrefs.GetInt("score");
 	}

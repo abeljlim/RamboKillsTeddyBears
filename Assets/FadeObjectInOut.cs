@@ -23,9 +23,6 @@ public class FadeObjectInOut : MonoBehaviour
     public bool fadeOutOnStart = false;
     private bool logInitialFadeSequence = false;
 
-
-
-
     // store colours
     private Color[] colors;
 

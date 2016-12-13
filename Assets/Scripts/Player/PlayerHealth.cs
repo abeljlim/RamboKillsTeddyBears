@@ -33,8 +33,8 @@ public class PlayerHealth : MonoBehaviour {
         playerAudio = GetComponent<AudioSource>();
         playerMovement = GetComponent<PlayerMovement>();
 
-        currentHealth = startHealth;	
-	}
+        currentHealth = startHealth;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -115,6 +115,9 @@ public class PlayerHealth : MonoBehaviour {
 
     public void TakeDamage(int damageAmout)
     {
+        if (PlayerWeapons.CurrSkill == PlayerWeapons.BULLETFRENZY) //invincible during Bullet Frenzy
+            return;
+
         damaged = true;
 
         currentHealth -= damageAmout;
