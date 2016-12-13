@@ -150,7 +150,7 @@ public class PlayerWeapons : MonoBehaviour {
             {
                 playerShooting.shootingDelayScale = 0.5f; //set to half
                 text_skill.enabled = true;
-                skillTextImg.color = Color.black;
+                //skillTextImg.color = Color.black;
                 StimPackImg.color = Color.red;
             }
 

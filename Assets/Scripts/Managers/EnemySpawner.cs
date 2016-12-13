@@ -36,7 +36,8 @@ public class EnemySpawner : MonoBehaviour {
         //{
         //    Debug.Log("Is spawning ...");
         //}
-        if(spawning && enemy[level-1] != null) //check global condition, in addition to if there would be an enemy
+        //Debug.Log(spawning);
+        if (spawning && enemy[level-1] != null) //check global condition, in addition to if there would be an enemy
             Instantiate ( enemy[level-1], transform.position, transform.rotation );
     }
 

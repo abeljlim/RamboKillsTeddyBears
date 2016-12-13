@@ -8,10 +8,11 @@ public class RestartPlayerData : MonoBehaviour {
         //delete all existing PlayerPrefs data
         PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("currentLevel", 5); //setting current level to 5 for testing
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+        EnemySpawner.spawning = true; //for enemies in demo
+    }
+
+    // Update is called once per frame
+    void Update ()
+    {
+    }
 }

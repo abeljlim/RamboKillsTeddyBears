@@ -92,6 +92,7 @@ void Awake ()
             PlayerPrefs.SetInt("currentLevel", level);
 
             PlayerPrefs.SetInt("score", MoneyManager.money);
+            EnemyHealth.bossExists = false; //no more boss at the end of the level
             Application.LoadLevel("Shop");
         }
 
