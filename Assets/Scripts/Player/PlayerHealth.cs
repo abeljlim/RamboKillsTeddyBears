@@ -115,6 +115,9 @@ public class PlayerHealth : MonoBehaviour {
 
     public void TakeDamage(int damageAmout)
     {
+        if (PlayerWeapons.CurrSkill == PlayerWeapons.BULLETFRENZY) //invincible during Bullet Frenzy
+            return;
+
         damaged = true;
 
         currentHealth -= damageAmout;

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class PlayerWeapons : MonoBehaviour {
 
@@ -28,6 +29,9 @@ public class PlayerWeapons : MonoBehaviour {
     // Use this for initialization
     void Start() {
 
+        if (!(Application.loadedLevelName == "Survival Game"))
+            return;
+
         ButtonSound = GetComponent<AudioSource>();
         playerShooting = transform.GetChild(0).GetComponent<Shooting>(); //gets the BulletEffect's Shooting script
 
@@ -44,12 +48,14 @@ public class PlayerWeapons : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (!(Application.loadedLevelName == "Survival Game"))
+            return;
 
         //Skill regen code
         if(SkillPts < 100) //hardcoded as 100
         {
             SkillPts = Mathf.Min(SkillPts + skillPtsRegenRate * Time.deltaTime, 100);
-            Debug.Log(SkillPts);
+            //Debug.Log(SkillPts);
             skillPtsSlider.value = SkillPts;
         }
 

@@ -4,7 +4,7 @@ using System.Collections;
 public class WaveManager : MonoBehaviour {
 
     //access level with EnemySpawner.level;
-    public static int level;
+    public static int level = 1;
     public GameObject[] SpawnPoint; //Not used
     public string[] levelName; //to correspond to the enemies spawned in the enemy gameobject in EnemySpawner
     public static float waveTime; //current wave time
@@ -15,6 +15,12 @@ public class WaveManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         level = 1;
+        if(PlayerPrefs.HasKey("currentLevel")) //new level
+        {
+            level = PlayerPrefs.GetInt("currentLevel");
+            LevelNameText.text = levelName[level-1]; //level-1 is the 0-based level
+            Debug.Log("Level: " + level);
+        }
         waveTime = 0;
         EnemySpawner.spawning = true;
         PlanetOrbit.SecondsInDay = levelTime[level - 1]; //update time of the day with the wave time.
@@ -30,11 +36,19 @@ public class WaveManager : MonoBehaviour {
 
             LevelNameText.text = levelName[level]; //level-1 is the 0-based level
             EnemySpawner.spawning = false; //pause for the period of waveStartTime
+
             level++;
             PlanetOrbit.SecondsInDay = levelTime[level - 1];
             waveTime = 0;
 
-            PlayerPrefs.SetInt("previousWave", Application.loadedLevel);
+            //call the PerLevelUpdate method in each SpawnPoint in the children of WaveManager
+            foreach (Transform child in transform)
+            {
+                child.gameObject.GetComponent<EnemySpawner>().PerLevelUpdate();
+            }
+
+            PlayerPrefs.SetInt("previousScene", Application.loadedLevel);
+            PlayerPrefs.SetInt("currentLevel", level);
 
             PlayerPrefs.SetInt("score", MoneyManager.money);
             Application.LoadLevel("Shop");

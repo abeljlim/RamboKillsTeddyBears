@@ -16,8 +16,8 @@ public class Shop : MonoBehaviour {
     // Exit the shop
     public void ExitShop()
     {
-        int previousWave = PlayerPrefs.GetInt("previousWave");
-        Application.LoadLevel(previousWave);
+        int previousScene = PlayerPrefs.GetInt("previousScene");
+        Application.LoadLevel(previousScene);
     }
 
 }
