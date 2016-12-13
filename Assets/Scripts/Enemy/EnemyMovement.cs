@@ -10,8 +10,8 @@ public class EnemyMovement : MonoBehaviour {
     //Speed changes depending on the time of day
     //public float daySpeed = 3;
     //public float nightSpeed = 4.5f;
-    public float daySpeed = 3.75f;
-    public float daySpeedDeviation = 0.75f;
+    public float daySpeed;
+    public float daySpeedDeviation;
 
     EnemyHealth enemyHealth;
 
@@ -50,8 +50,7 @@ public class EnemyMovement : MonoBehaviour {
 
         //Set speed depending on time of day.
         //The later at night, the faster the enemies move.
-        nav.speed = 3.75f + (-PlanetOrbit.isDayAmt) * daySpeedDeviation;
-
+        //nav.speed = 3.75f + (-PlanetOrbit.isDayAmt) * daySpeedDeviation;
 
         //non-fuzzy logic approach to speed
         /*if (PlanetOrbit.isDayAmt && nav.speed != daySpeed)
@@ -62,5 +61,17 @@ public class EnemyMovement : MonoBehaviour {
         {
             nav.speed = nightSpeed;
         }
-*/	}
+
+*/
+        // Change speed depending on time of day
+        if (WaveManager.isDay)
+        {
+            nav.speed = daySpeed;
+        }
+        else
+        {
+            nav.speed = daySpeed * 2;
+        }
+
+    }
 }

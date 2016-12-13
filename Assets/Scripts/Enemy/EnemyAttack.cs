@@ -39,7 +39,10 @@ public class EnemyAttack : MonoBehaviour {
 
         if (playerHealth.currentHealth > 0)
         {
-            playerHealth.TakeDamage(attackDamage);
+            if(WaveManager.isDay == true)
+                playerHealth.TakeDamage(attackDamage);
+            else
+                playerHealth.TakeDamage(2 * attackDamage);
         }
     }
     

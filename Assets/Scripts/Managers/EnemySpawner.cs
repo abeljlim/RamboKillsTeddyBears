@@ -4,27 +4,50 @@ using System.Collections;
 public class EnemySpawner : MonoBehaviour {
 
     public GameObject[] enemy;
-    public static bool spawning;
+    public static bool spawning; //global condition on whether to spawn
     public static int level {
         get {return WaveManager.level;}
     } //what level, or wave, this would be, which determines which enemy is to spawn.
-    public static int spawnInterval; //'global' interval shared across all spawners; can separate them as well.
+    public int[] spawnInterval; //'global' interval shared across all spawners; can separate them as well.
 
 	// Use this for initialization
 	void Start () {
+        //if(spawnInterval[level-1] == 1000)
+        //{
+        //    Debug.Log("Boss spawnpoint did start");
+        //}
+        //else
+        //{
+        //    Debug.Log("Level: "+level);
+        //}
         // Repeatedly call Spawn at intervals of spawnInterval.
-        spawnInterval = 3;
-        InvokeRepeating ( "Spawn", 0, spawnInterval );
-	}
+        if (enemy[level - 1] != null)
+        {
+            //Debug.Log(enemy[level - 1]);
+            //Debug.Log("SpawnPoint started; interval: " + spawnInterval[level - 1]);
+            InvokeRepeating("Spawn", 0, spawnInterval[level - 1]); //recreated each scene, so just refer to this ...
+        }
+    }
 
     void Spawn ()
     {
-        if(spawning)
+        //Debug.Log(level);
+        //if (spawnInterval[level-1] == 2)
+        //{
+        //    Debug.Log("Is spawning ...");
+        //}
+        if(spawning && enemy[level-1] != null) //check global condition, in addition to if there would be an enemy
             Instantiate ( enemy[level-1], transform.position, transform.rotation );
     }
 
 	// Update is called once per frame
 	void Update () {
-	
-	}
+    }
+    public void PerLevelUpdate()
+    {
+        /*Debug.Log("New Spawn for level "+level+", with interval "+spawnInterval[level-1]);
+        if (enemy[level - 1] != null)
+            CancelInvoke("Spawn");
+        InvokeRepeating("Spawn", 0, spawnInterval[level - 1]);*/
+    }
 }

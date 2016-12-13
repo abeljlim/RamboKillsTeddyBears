@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour {
 
-    public int maxHealth = 100;
+    public int maxHealth;
     public int currHealth;
 
     CapsuleCollider capsuleCollider;
@@ -18,8 +20,25 @@ public class EnemyHealth : MonoBehaviour {
     public static float flashTime;
     public float currFlashTime = 0f;
     public bool hitFlash = false;
-    private static Color[] initColors;
+    public static List<Color[]> initColors; //initialized in WaveManager
+    public int initColorID; //each object with a different material is supposed to have their own ID
     private static Color hitColor = Color.yellow;
+    public bool isBoss;
+    public static bool BossKilled = false;
+
+    //boss health - handled in PlayerHealth
+    public static bool bossExists = false;
+    public Slider bossHealthSlider;
+    public WaveManager waveManager;
+
+    void Awake()
+    {
+        /*
+        if(isBoss)
+        {
+            Debug.Log("bossExists checked");
+        }*/
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -30,19 +49,30 @@ public class EnemyHealth : MonoBehaviour {
         rigidBody = GetComponent<Rigidbody> ();
         isDead = false; //not dead by default
 
+        if(isBoss)
+        {
+            bossExists = true;
+            waveManager = GameObject.FindGameObjectWithTag("WaveManager").GetComponent<WaveManager>();
+            bossHealthSlider = waveManager.bossHealthSlider;
+            bossHealthSlider.maxValue = maxHealth;
+            bossHealthSlider.value = currHealth;
+            bossHealthSlider.minValue = 0;
+            waveManager.bossEnemyHealth = this; //handle health updating in WaveManager, where the updates would only occur once per Update there
+        }
+
 
         //get original colors of the GameObject
         // grab all child objects
-        if (initColors == null)
+        if (initColors[initColorID] == null)
         {
             Renderer[] rendererObjects = GetComponentsInChildren<Renderer> ();
             //create a cache of colors if necessary
-            initColors = new Color[rendererObjects.Length];
+            initColors[initColorID] = new Color[rendererObjects.Length];
 
             // store the original colours for all child objects
             for (int i = 0; i < rendererObjects.Length; i++)
             {
-                initColors[i] = rendererObjects[i].material.color;
+                initColors[initColorID][i] = rendererObjects[i].material.color;
             }
         }
 	}
@@ -50,7 +80,6 @@ public class EnemyHealth : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         if (currFlashTime > 0f) //If the enemy got hit, and hitflash is occurring
         {
             currFlashTime -= Time.deltaTime;
@@ -59,7 +88,7 @@ public class EnemyHealth : MonoBehaviour {
             //apply color proportional to the flash time %
             for (int i = 0; i < rendererObjects.Length; i++)
             {
-                Color currColor = Color.Lerp ( hitColor, initColors[i], 1 - (currFlashTime / flashTime) );
+                Color currColor = Color.Lerp ( hitColor, initColors[initColorID][i], 1 - (currFlashTime / flashTime) );
                 rendererObjects[i].material.SetColor ( "_Color", currColor );
             }
         }
@@ -72,7 +101,7 @@ public class EnemyHealth : MonoBehaviour {
             //get colors from the initColors
             for (int i = 0; i < rendererObjects.Length; i++)
             {
-                rendererObjects[i].material.SetColor ( "_Color", initColors[i] );
+                rendererObjects[i].material.SetColor ( "_Color", initColors[initColorID][i] );
             }
         }
 	}
@@ -113,8 +142,19 @@ public class EnemyHealth : MonoBehaviour {
         capsuleCollider.isTrigger = true; //make the enemy intangible
         Destroy ( rigidBody );
         nav.enabled = false;
+
         MoneyManager.money += 20;
+
         Destroy ( gameObject , 0.75f);
+    }
+
+    void OnDestroy()
+    {
+        if (isBoss)
+        {
+            //could do some death animation
+            BossKilled = true;
+        }
     }
 
     /// <summary>
@@ -125,8 +165,11 @@ public class EnemyHealth : MonoBehaviour {
     {
         if (other.gameObject.CompareTag ( "PlayerBullet" ))
         {
-            //Debug.Log ( "Collision" );
-            TakeDamage ( 40 );
+            if (WaveManager.isDay == true)
+                //Debug.Log ( "Collision" );
+                TakeDamage(100);
+            else
+                TakeDamage(50);
         }
     }
 }
