@@ -12,11 +12,19 @@ public class EnemySpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        //if(spawnInterval[level-1] == 1000)
+        //{
+        //    Debug.Log("Boss spawnpoint did start");
+        //}
+        //else
+        //{
+        //    Debug.Log("Level: "+level);
+        //}
         // Repeatedly call Spawn at intervals of spawnInterval.
         if (enemy[level - 1] != null)
         {
-            Debug.Log(enemy[level - 1]);
-            Debug.Log("SpawnPoint started; interval: " + spawnInterval[level - 1]);
+            //Debug.Log(enemy[level - 1]);
+            //Debug.Log("SpawnPoint started; interval: " + spawnInterval[level - 1]);
             InvokeRepeating("Spawn", 0, spawnInterval[level - 1]); //recreated each scene, so just refer to this ...
         }
     }

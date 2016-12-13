@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyHealth : MonoBehaviour {
 
-    public int maxHealth = 100;
+    public int maxHealth;
     public int currHealth;
 
     CapsuleCollider capsuleCollider;
@@ -18,8 +19,11 @@ public class EnemyHealth : MonoBehaviour {
     public static float flashTime;
     public float currFlashTime = 0f;
     public bool hitFlash = false;
-    private static Color[] initColors;
+    public static List<Color[]> initColors; //initialized in WaveManager
+    public int initColorID; //each object with a different material is supposed to have their own ID
     private static Color hitColor = Color.yellow;
+    public bool isBoss;
+    public static bool BossKilled = false;
 
 	// Use this for initialization
 	void Start () {
@@ -33,16 +37,16 @@ public class EnemyHealth : MonoBehaviour {
 
         //get original colors of the GameObject
         // grab all child objects
-        if (initColors == null)
+        if (initColors[initColorID] == null)
         {
             Renderer[] rendererObjects = GetComponentsInChildren<Renderer> ();
             //create a cache of colors if necessary
-            initColors = new Color[rendererObjects.Length];
+            initColors[initColorID] = new Color[rendererObjects.Length];
 
             // store the original colours for all child objects
             for (int i = 0; i < rendererObjects.Length; i++)
             {
-                initColors[i] = rendererObjects[i].material.color;
+                initColors[initColorID][i] = rendererObjects[i].material.color;
             }
         }
 	}
@@ -59,7 +63,7 @@ public class EnemyHealth : MonoBehaviour {
             //apply color proportional to the flash time %
             for (int i = 0; i < rendererObjects.Length; i++)
             {
-                Color currColor = Color.Lerp ( hitColor, initColors[i], 1 - (currFlashTime / flashTime) );
+                Color currColor = Color.Lerp ( hitColor, initColors[initColorID][i], 1 - (currFlashTime / flashTime) );
                 rendererObjects[i].material.SetColor ( "_Color", currColor );
             }
         }
@@ -72,7 +76,7 @@ public class EnemyHealth : MonoBehaviour {
             //get colors from the initColors
             for (int i = 0; i < rendererObjects.Length; i++)
             {
-                rendererObjects[i].material.SetColor ( "_Color", initColors[i] );
+                rendererObjects[i].material.SetColor ( "_Color", initColors[initColorID][i] );
             }
         }
 	}
@@ -100,6 +104,11 @@ public class EnemyHealth : MonoBehaviour {
         if (currHealth <= 0)
         {
             isDead = true;
+            if(isBoss)
+            {
+                //could do some death animation
+                BossKilled = true;
+            }
             Die ();
         }
     }

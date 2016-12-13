@@ -7,6 +7,7 @@ public class RestartPlayerData : MonoBehaviour {
 	void Start () {
         //delete all existing PlayerPrefs data
         PlayerPrefs.DeleteAll();
+        //PlayerPrefs.SetInt("currentLevel", 5); //setting current level to 5 for testing
 	}
 	
 	// Update is called once per frame

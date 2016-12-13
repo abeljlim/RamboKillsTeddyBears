@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WaveManager : MonoBehaviour {
 
@@ -13,26 +14,43 @@ public class WaveManager : MonoBehaviour {
     public static bool isDay = true;
 
 	// Use this for initialization
-	void Start () {
+    // start before any of the SpawnPoint code runs
+    void Awake ()
+    {
+
         level = 1;
-        if(PlayerPrefs.HasKey("currentLevel")) //new level
+        if (PlayerPrefs.HasKey("currentLevel")) //new level
         {
             level = PlayerPrefs.GetInt("currentLevel");
-            LevelNameText.text = levelName[level-1]; //level-1 is the 0-based level
-            Debug.Log("Level: " + level);
+            LevelNameText.text = levelName[level - 1]; //level-1 is the 0-based level
+            //Debug.Log("Level: " + level);
         }
         waveTime = 0;
         EnemySpawner.spawning = true;
+        if(EnemyHealth.initColors == null)
+        {
+            //Debug.Log(EnemyHealth.initColors);
+            //instantiate initColors
+            EnemyHealth.initColors = new List<Color[]>(10); //with 4 colors at the moment
+            for (int i = 0; i < 10; i++)
+                EnemyHealth.initColors.Add(null);
+        }
+    }
+
+	void Start () {
         PlanetOrbit.SecondsInDay = levelTime[level - 1]; //update time of the day with the wave time.
 	}
 	
 	// Update is called once per frame
 	void Update () {
         waveTime += Time.deltaTime;
+
         //advance to next level when time of wave elapses, as long as more levels exist
-        if (waveTime >= levelTime[level-1] && level < levelName.Length)
+        //or, advance when a boss is killed
+        if (EnemyHealth.BossKilled || waveTime >= levelTime[level-1] && level < levelName.Length)
         {
             //Time.timeScale = 0;
+            EnemyHealth.BossKilled = false;
 
             LevelNameText.text = levelName[level]; //level-1 is the 0-based level
             EnemySpawner.spawning = false; //pause for the period of waveStartTime
