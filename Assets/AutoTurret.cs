@@ -117,7 +117,7 @@ public class AutoTurret : MonoBehaviour {
         //{
             //Fire a bullet projectile
         GameObject CurrPlayerBullet = Instantiate(Resources.Load("PlayerBullet"), transform.position + transform.forward * 1, Quaternion.identity) as GameObject;
-        Debug.Log(CurrPlayerBullet.transform.position.x);
+        //Debug.Log(CurrPlayerBullet.transform.position.x);
         //if (!PlayerWeapons.CurrSkill)
         //{
         CurrPlayerBullet.GetComponent<Rigidbody>().AddForce(-transform.up * 1000);

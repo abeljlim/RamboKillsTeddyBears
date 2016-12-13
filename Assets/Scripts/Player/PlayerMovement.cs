@@ -15,11 +15,16 @@ public class PlayerMovement : MonoBehaviour {
     Rigidbody playerRigidbody;
 
     private Input currentKeyboardState;
+    GameObject ground;
+    private static Vector3 levelMin, levelMax;
 
     // Use this for initialization
     void Start () {
 
+        ground = GameObject.FindGameObjectWithTag("LevelArea");
         groundLayer = LayerMask.GetMask("Ground");
+        levelMin = ground.GetComponent<Collider>().bounds.min;
+        levelMax = ground.GetComponent<Collider>().bounds.max;
         playerRigidbody = GetComponent<Rigidbody>();
 
 	}
@@ -82,6 +87,10 @@ public class PlayerMovement : MonoBehaviour {
         movement = movement.normalized * playerWalkSpeed;
 
         Vector3 direction = movement;
+        Vector3 potentialNewPos = transform.position + movement;
+
+        if (potentialNewPos.x < levelMin.x || potentialNewPos.z < levelMin.z || potentialNewPos.x > levelMax.x || potentialNewPos.z > levelMax.z) //disallow doing the movement if it would lead to going out of what would be the ground - as covered by LevelArea
+            return;
 
         //The following raycast is to prevent movement that would go through thin objects and walls (such as hollow walls), and such
         Ray ray = new Ray ( transform.position, direction );
