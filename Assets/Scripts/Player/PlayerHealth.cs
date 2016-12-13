@@ -33,8 +33,8 @@ public class PlayerHealth : MonoBehaviour {
         playerAudio = GetComponent<AudioSource>();
         playerMovement = GetComponent<PlayerMovement>();
 
-        currentHealth = startHealth;	
-	}
+        currentHealth = startHealth;
+    }
 	
 	// Update is called once per frame
 	void Update () {

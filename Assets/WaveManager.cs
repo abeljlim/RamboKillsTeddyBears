@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class WaveManager : MonoBehaviour {
 
@@ -13,9 +14,12 @@ public class WaveManager : MonoBehaviour {
     public int waveStartTime = 5;
     public static bool isDay = true;
 
-	// Use this for initialization
-    // start before any of the SpawnPoint code runs
-    void Awake ()
+    public Slider bossHealthSlider;
+    public EnemyHealth bossEnemyHealth;
+
+// Use this for initialization
+// start before any of the SpawnPoint code runs
+void Awake ()
     {
 
         level = 1;
@@ -39,11 +43,30 @@ public class WaveManager : MonoBehaviour {
 
 	void Start () {
         PlanetOrbit.SecondsInDay = levelTime[level - 1]; //update time of the day with the wave time.
+        //bossHealthSlider = 
 	}
 	
 	// Update is called once per frame
 	void Update () {
         waveTime += Time.deltaTime;
+
+        if (!EnemyHealth.bossExists)
+        {
+            //Debug.Log("Disable boss health");
+            bossHealthSlider.enabled = false;
+            bossHealthSlider.transform.localScale = new Vector3(0, 0, 0); //hide the slider - this being one way to do it; another would be to have a CanvasGroup component.
+            //bossHealthSlider.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        }
+        else
+        {
+            //if (bossHealthSlider != null) //if this would have been set by a boss - update boss health accordingly
+            //{
+            //doing both here ...
+            bossHealthSlider.enabled = true;
+            bossHealthSlider.transform.localScale = new Vector3(1, 1, 1); //hide the slider - this being one way to do it; another would be to have a CanvasGroup component.
+            bossHealthSlider.value = bossEnemyHealth.currHealth;
+            //}
+        }
 
         //advance to next level when time of wave elapses, as long as more levels exist
         //or, advance when a boss is killed

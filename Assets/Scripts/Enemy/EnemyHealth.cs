@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour {
 
@@ -25,6 +26,20 @@ public class EnemyHealth : MonoBehaviour {
     public bool isBoss;
     public static bool BossKilled = false;
 
+    //boss health - handled in PlayerHealth
+    public static bool bossExists = false;
+    public Slider bossHealthSlider;
+    public WaveManager waveManager;
+
+    void Awake()
+    {
+        /*
+        if(isBoss)
+        {
+            Debug.Log("bossExists checked");
+        }*/
+    }
+
 	// Use this for initialization
 	void Start () {
         flashTime = 0.2f;
@@ -33,6 +48,17 @@ public class EnemyHealth : MonoBehaviour {
         nav = GetComponent<NavMeshAgent> ();
         rigidBody = GetComponent<Rigidbody> ();
         isDead = false; //not dead by default
+
+        if(isBoss)
+        {
+            bossExists = true;
+            waveManager = GameObject.FindGameObjectWithTag("WaveManager").GetComponent<WaveManager>();
+            bossHealthSlider = waveManager.bossHealthSlider;
+            bossHealthSlider.maxValue = maxHealth;
+            bossHealthSlider.value = currHealth;
+            bossHealthSlider.minValue = 0;
+            waveManager.bossEnemyHealth = this; //handle health updating in WaveManager, where the updates would only occur once per Update there
+        }
 
 
         //get original colors of the GameObject
@@ -54,7 +80,6 @@ public class EnemyHealth : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         if (currFlashTime > 0f) //If the enemy got hit, and hitflash is occurring
         {
             currFlashTime -= Time.deltaTime;
