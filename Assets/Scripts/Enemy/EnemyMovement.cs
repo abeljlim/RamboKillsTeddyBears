@@ -55,10 +55,19 @@ public class EnemyMovement : MonoBehaviour {
             {
                 Destroy(gameObject);
             }
+            nav.speed = daySpeed;
         }
         else
         {
             nav.SetDestination(player.position);
+            if (PlanetOrbit.isDay)
+            {
+                nav.speed = daySpeed;
+            }
+            else
+            {
+                nav.speed = daySpeed * 2;
+            }
         }
         //Debug.Log ( "Playerpos: " + player.position );
         //Debug.Log ( "Path:" );
@@ -82,14 +91,6 @@ public class EnemyMovement : MonoBehaviour {
 
 */
         // Change speed depending on time of day
-        if (WaveManager.isDay)
-        {
-            nav.speed = daySpeed;
-        }
-        else
-        {
-            nav.speed = daySpeed * 2;
-        }
 
     }
 }

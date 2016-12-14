@@ -106,7 +106,7 @@ public class EnemyHealth : MonoBehaviour {
         }
 	}
 
-    void TakeDamage ( int hitPoints/*, Vector3 hitPoint */)
+    public void TakeDamage ( int hitPoints/*, Vector3 hitPoint */)
     {
         if (isDead)
             return;
@@ -165,7 +165,7 @@ public class EnemyHealth : MonoBehaviour {
     {
         if (other.gameObject.CompareTag ( "PlayerBullet" ))
         {
-            if (WaveManager.isDay == true)
+            if (PlanetOrbit.isDay)
                 //Debug.Log ( "Collision" );
                 TakeDamage(100);
             else

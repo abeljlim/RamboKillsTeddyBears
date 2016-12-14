@@ -61,5 +61,15 @@ public class PlayerBullet : MonoBehaviour {
             playerHealth.TakeDamage ( 20 );
             justHitPlayer = true;
         }
+
+        //Using triggers instead for enemies, so that short enemies can still get hit and bullet ricochets don't repeat for the same bullet repeatedly
+        //if (other.gameObject.CompareTag("Enemy"))
+        //{
+        //    EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
+        //    if(PlanetOrbit.isDay)
+        //        enemyHealth.TakeDamage(100);
+        //    else
+        //        enemyHealth.TakeDamage(50);
+        //}
     }
 }

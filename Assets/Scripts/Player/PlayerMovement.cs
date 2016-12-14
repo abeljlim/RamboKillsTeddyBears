@@ -97,12 +97,12 @@ public class PlayerMovement : MonoBehaviour {
         RaycastHit hit;
         if (!Physics.Raycast ( ray, out hit, direction.magnitude))
         {
-
             playerRigidbody.MovePosition ( transform.position + movement );
             // Do something if hit
         }
         else
         {
+            Debug.Log("Wall hit");
             playerRigidbody.MovePosition ( hit.point ); //go as close as possible to the place hit
         }
         

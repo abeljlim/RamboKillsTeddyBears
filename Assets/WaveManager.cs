@@ -12,7 +12,7 @@ public class WaveManager : MonoBehaviour {
     public static float waveTime; //current wave time
     public int[] levelTime; //full time for the wave to finish
     public int waveStartTime = 5;
-    public static bool isDay = true;
+    //public static bool isDay = true; //Not used in favour of PlanetOrbit.isDay
     //public static bool prevWasDay = true;
 
     public Slider bossHealthSlider;
@@ -47,7 +47,7 @@ void Awake ()
         }
         BGMusic = GetComponent<AudioSource>();
         //doubleAudioSource = GetComponent<DoubleAudioSource>();
-        if(isDay)
+        if(PlanetOrbit.isDay)
         {
             BGMusic.clip = DayClip;
             BGMusic.Play();
@@ -118,14 +118,14 @@ void Awake ()
         }
 
         //toggle the state between night and day
-        if ((waveTime >= 0) && (waveTime < (levelTime[level - 1] / 2)))
-        {
-            isDay = true;
-        }
-        else
-        {
-            isDay = false;
-        }
+        //if ((waveTime >= 0) && (waveTime < (levelTime[level - 1] / 2)))
+        //{
+        //    isDay = true;
+        //}
+        //else
+        //{
+        //    isDay = false;
+        //}
 
         if(!PlanetOrbit.isDay && BGMusic.clip == DayClip)
         {
