@@ -1,0 +1,214 @@
+fileFormatVersion: 2
+guid: 7d1dffe6edf154c4f90c5a78acaac103
+timeCreated: 1481696213
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Bone
+    100004: Cylinder
+    100006: Lights
+    100008: //RootNode
+    100010: VisualSceneNode1
+    100012: VisualSceneNode10
+    100014: VisualSceneNode11
+    100016: VisualSceneNode12
+    100018: VisualSceneNode13
+    100020: VisualSceneNode14
+    100022: VisualSceneNode15
+    100024: VisualSceneNode16
+    100026: VisualSceneNode17
+    100028: VisualSceneNode18
+    100030: VisualSceneNode19
+    100032: VisualSceneNode2
+    100034: VisualSceneNode20
+    100036: VisualSceneNode21
+    100038: VisualSceneNode22
+    100040: VisualSceneNode23
+    100042: VisualSceneNode24
+    100044: VisualSceneNode25
+    100046: VisualSceneNode26
+    100048: VisualSceneNode27
+    100050: VisualSceneNode28
+    100052: VisualSceneNode29
+    100054: VisualSceneNode3
+    100056: VisualSceneNode30
+    100058: VisualSceneNode31
+    100060: VisualSceneNode32
+    100062: VisualSceneNode33
+    100064: VisualSceneNode34
+    100066: VisualSceneNode35
+    100068: VisualSceneNode36
+    100070: VisualSceneNode37
+    100072: VisualSceneNode38
+    100074: VisualSceneNode39
+    100076: VisualSceneNode4
+    100078: VisualSceneNode40
+    100080: VisualSceneNode41
+    100082: VisualSceneNode42
+    100084: VisualSceneNode43
+    100086: VisualSceneNode44
+    100088: VisualSceneNode45
+    100090: VisualSceneNode46
+    100092: VisualSceneNode47
+    100094: VisualSceneNode48
+    100096: VisualSceneNode49
+    100098: VisualSceneNode5
+    100100: VisualSceneNode50
+    100102: VisualSceneNode51
+    100104: VisualSceneNode52
+    100106: VisualSceneNode53
+    100108: VisualSceneNode54
+    100110: VisualSceneNode55
+    100112: VisualSceneNode56
+    100114: VisualSceneNode57
+    100116: VisualSceneNode58
+    100118: VisualSceneNode59
+    100120: VisualSceneNode6
+    100122: VisualSceneNode60
+    100124: VisualSceneNode61
+    100126: VisualSceneNode62
+    100128: VisualSceneNode63
+    100130: VisualSceneNode7
+    100132: VisualSceneNode8
+    100134: VisualSceneNode9
+    400000: Armature
+    400002: Bone
+    400004: Cylinder
+    400006: Lights
+    400008: //RootNode
+    400010: VisualSceneNode1
+    400012: VisualSceneNode10
+    400014: VisualSceneNode11
+    400016: VisualSceneNode12
+    400018: VisualSceneNode13
+    400020: VisualSceneNode14
+    400022: VisualSceneNode15
+    400024: VisualSceneNode16
+    400026: VisualSceneNode17
+    400028: VisualSceneNode18
+    400030: VisualSceneNode19
+    400032: VisualSceneNode2
+    400034: VisualSceneNode20
+    400036: VisualSceneNode21
+    400038: VisualSceneNode22
+    400040: VisualSceneNode23
+    400042: VisualSceneNode24
+    400044: VisualSceneNode25
+    400046: VisualSceneNode26
+    400048: VisualSceneNode27
+    400050: VisualSceneNode28
+    400052: VisualSceneNode29
+    400054: VisualSceneNode3
+    400056: VisualSceneNode30
+    400058: VisualSceneNode31
+    400060: VisualSceneNode32
+    400062: VisualSceneNode33
+    400064: VisualSceneNode34
+    400066: VisualSceneNode35
+    400068: VisualSceneNode36
+    400070: VisualSceneNode37
+    400072: VisualSceneNode38
+    400074: VisualSceneNode39
+    400076: VisualSceneNode4
+    400078: VisualSceneNode40
+    400080: VisualSceneNode41
+    400082: VisualSceneNode42
+    400084: VisualSceneNode43
+    400086: VisualSceneNode44
+    400088: VisualSceneNode45
+    400090: VisualSceneNode46
+    400092: VisualSceneNode47
+    400094: VisualSceneNode48
+    400096: VisualSceneNode49
+    400098: VisualSceneNode5
+    400100: VisualSceneNode50
+    400102: VisualSceneNode51
+    400104: VisualSceneNode52
+    400106: VisualSceneNode53
+    400108: VisualSceneNode54
+    400110: VisualSceneNode55
+    400112: VisualSceneNode56
+    400114: VisualSceneNode57
+    400116: VisualSceneNode58
+    400118: VisualSceneNode59
+    400120: VisualSceneNode6
+    400122: VisualSceneNode60
+    400124: VisualSceneNode61
+    400126: VisualSceneNode62
+    400128: VisualSceneNode63
+    400130: VisualSceneNode7
+    400132: VisualSceneNode8
+    400134: VisualSceneNode9
+    4300000: Cylinder
+    4300002: VisualSceneNode63
+    7400000: Default Take
+    7400002: ArmatureAction
+    9500000: //RootNode
+    13700000: Cylinder
+    13700002: VisualSceneNode63
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
