@@ -7,8 +7,8 @@ public class RestartPlayerData : MonoBehaviour {
 	void Start () {
         //delete all existing PlayerPrefs data
         PlayerPrefs.DeleteAll();
-        PlayerPrefs.SetInt("currentLevel", 5); //setting current level to 5 for testing
-        PlayerPrefs.SetInt("score", 100000);
+        PlayerPrefs.SetInt("currentLevel", 3); //setting current level to 5 for testing
+        PlayerPrefs.SetInt("score", 0);
         EnemySpawner.spawning = true; //for enemies in demo
     }
 
