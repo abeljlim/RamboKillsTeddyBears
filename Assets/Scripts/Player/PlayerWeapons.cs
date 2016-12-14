@@ -174,6 +174,7 @@ public class PlayerWeapons : MonoBehaviour {
             return;
 
         ButtonSound = GetComponent<AudioSource>();
+        Debug.Log(transform.name);
         playerShooting = transform.GetChild(0).GetComponent<Shooting>(); //gets the BulletEffect's Shooting script
 
         //hide anything that isn't obtained
@@ -325,7 +326,7 @@ public class PlayerWeapons : MonoBehaviour {
             //Stimpack skill
             if (CurrSkill == STIMPACK)
             {
-                if (skillTimer >= 5 + (skillE - 1)) //duration of stimpack is hardcoded as 5 + (level of skill - 1) here
+                if (skillTimer >= 5 + (skillE - 1) * 0.5) //duration of stimpack is hardcoded as 5 + (level of skill - 1) * 0.5 here
                 {
                     playerShooting.shootingDelayScale = 1.0f;
                     CurrSkill = NONE;
@@ -336,7 +337,7 @@ public class PlayerWeapons : MonoBehaviour {
 
             if (CurrSkill == STIMPACK)
             {
-                playerShooting.shootingDelayScale = 0.5f; //set to half
+                playerShooting.shootingDelayScale = 0.5f * Mathf.Pow(0.95f, skillE - 1); //set to half * 0.95 ^ (level of skill - 1)
                 StimPackImg.color = Color.red;
             }
 
