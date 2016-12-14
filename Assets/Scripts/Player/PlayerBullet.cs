@@ -61,17 +61,5 @@ public class PlayerBullet : MonoBehaviour {
             playerHealth.TakeDamage ( 20 );
             justHitPlayer = true;
         }
-        else if(other.gameObject.CompareTag("Enemy"))
-        {
-            //if (other.gameObject.CompareTag("PlayerBullet"))
-            EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
-                if (WaveManager.isDay == true)
-                    //Debug.Log ( "Collision" );
-                    enemyHealth.TakeDamage(100);
-                else
-                    enemyHealth.TakeDamage(50);
-            
-
-        }
     }
 }

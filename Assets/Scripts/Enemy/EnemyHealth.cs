@@ -106,7 +106,7 @@ public class EnemyHealth : MonoBehaviour {
         }
 	}
 
-    public void TakeDamage ( int hitPoints/*, Vector3 hitPoint */)
+    void TakeDamage ( int hitPoints/*, Vector3 hitPoint */)
     {
         if (isDead)
             return;
@@ -163,14 +163,13 @@ public class EnemyHealth : MonoBehaviour {
     /// <param name="other"></param>
     void OnTriggerEnter ( Collider other )
     {
-        //Move this to bullet code, not handled by triggers
-        //if (other.gameObject.CompareTag ( "PlayerBullet" ))
-        //{
-        //    if (WaveManager.isDay == true)
-        //        //Debug.Log ( "Collision" );
-        //        TakeDamage(100);
-        //    else
-        //        TakeDamage(50);
-        //}
+        if (other.gameObject.CompareTag ( "PlayerBullet" ))
+        {
+            if (WaveManager.isDay == true)
+                //Debug.Log ( "Collision" );
+                TakeDamage(100);
+            else
+                TakeDamage(50);
+        }
     }
 }
