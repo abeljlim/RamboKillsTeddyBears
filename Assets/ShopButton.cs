@@ -92,30 +92,52 @@ public class ShopButton : MonoBehaviour {
                     text.text = "";
                 }
                 break;
-            case "StimPackLabel":
-            case "StimPackImage":
             case "StimPackPrice":
-                if(PlayerWeapons.skillE == 1)
-                {
-                    GreyComponent();
-                }
+                text.text = PlayerWeapons.STIMPACK_PRICE.ToString();
                 break;
-            case "BulletFrenzyLabel":
-            case "BulletFrenzyImage":
+            case "StimPackLevel":
+                text.text = "Lv"+(PlayerWeapons.skillE+1); //display next level
+                break;
             case "BulletFrenzyPrice":
-                if (PlayerWeapons.skillR == 1)
-                {
-                    GreyComponent();
-                }
+                text.text = PlayerWeapons.BULLETFRENZY_PRICE.ToString();
                 break;
-            case "AutoTurretLabel":
-            case "AutoTurretImage":
+            case "BulletFrenzyLevel":
+                text.text = "Lv" + (PlayerWeapons.skillR+1);
+                break;
             case "AutoTurretPrice":
-                if (PlayerWeapons.skillT == 1)
-                {
-                    GreyComponent();
-                }
+                text.text = PlayerWeapons.AUTOTURRET_PRICE.ToString();
                 break;
+            case "AutoTurretLevel":
+                text.text = "Lv" + (PlayerWeapons.skillT + 1);
+                break;
+                //Greying scrapped for allowing repeatedly levelling up abilities    
+                //case "StimPackLabel":
+                //case "StimPackImage":
+                //case "StimPackPrice":
+                //case "StimPackLevel":
+                //    if (PlayerWeapons.GlobalScore < PlayerWeapons.STIMPACK_PRICE)
+                //    {
+                //        GreyComponent();
+                //    }
+                //    break;
+                //case "BulletFrenzyLabel":
+                //case "BulletFrenzyImage":
+                //case "BulletFrenzyPrice":
+                //case "BulletFrenzyLevel":
+                //    if (PlayerWeapons.GlobalScore < PlayerWeapons.BULLETFRENZY_PRICE)
+                //    {
+                //        GreyComponent();
+                //    }
+                //    break;
+                //case "AutoTurretLabel":
+                //case "AutoTurretImage":
+                //case "AutoTurretPrice":
+                //case "AutoTurretLevel":
+                //    if (PlayerWeapons.GlobalScore < PlayerWeapons.AUTOTURRET_PRICE)
+                //    {
+                //        GreyComponent();
+                //    }
+                //    break;
         }
     }
     void GreyComponent()
