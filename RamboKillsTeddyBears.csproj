@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AmmoTracker.cs" />
     <Compile Include="Assets\AutoTurret.cs" />
     <Compile Include="Assets\DoubleAudioSource.cs" />
     <Compile Include="Assets\EnemyDest.cs" />
