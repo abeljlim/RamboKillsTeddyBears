@@ -9,6 +9,8 @@ public class PlayerWeapons : MonoBehaviour {
 
     public Text skillTextImg, text_skill;
     public Image StimPackImg, BulletFrenzyImg, AutoTurretImg, PistolImg, RifleImg, ShotgunImg;
+    public Text StimPackText, BulletFrenzyText, AutoTurretText, RifleText, ShotgunText; //text for the label for the hotkey
+
     public const int NONE = 0, STIMPACK = 1, BULLETFRENZY = 2, AUTOTURRET = 3;
     public static int CurrSkill = NONE;
 
@@ -16,6 +18,10 @@ public class PlayerWeapons : MonoBehaviour {
     public const int RIFLEAMMO_PRICE = 100;
     public const int SHOTGUN_PRICE = 300;
     public const int SHOTGUNAMMO_PRICE = 100;
+
+    public const int STIMPACK_PRICE = 800;
+    public const int BULLETFRENZY_PRICE = 3000;
+    public const int AUTOTURRET_PRICE = 8000;
 
     public static int ShotgunAmmo, RifleAmmo;
     public bool gun1;
@@ -57,6 +63,56 @@ public class PlayerWeapons : MonoBehaviour {
             PlayerPrefs.SetInt("gun4", value);
         }
     }//default is false
+    public static int skillE //stimpack
+    {
+        get
+        {
+            if (PlayerPrefs.HasKey("skillE"))
+                return PlayerPrefs.GetInt("skillE");
+            else
+            {
+                return 0;
+            }
+        }
+        set
+        {
+            PlayerPrefs.SetInt("skillE", value);
+        }
+    }
+    public static int skillR //bullet frenzy
+    {
+        get
+        {
+            if (PlayerPrefs.HasKey("skillR"))
+                return PlayerPrefs.GetInt("skillR");
+            else
+            {
+                return 0;
+            }
+        }
+        set
+        {
+            PlayerPrefs.SetInt("skillR", value);
+        }
+    }
+
+    public static int skillT //auto-turret
+    {
+        get
+        {
+            if (PlayerPrefs.HasKey("skillT"))
+                return PlayerPrefs.GetInt("skillT");
+            else
+            {
+                return 0;
+            }
+        }
+        set
+        {
+            PlayerPrefs.SetInt("skillT", value);
+        }
+    }
+
     public static int GlobalScore
     {
         get
@@ -87,6 +143,7 @@ public class PlayerWeapons : MonoBehaviour {
     public int AutoTurretCost = 25;
 
     public AudioClip StimPackSound, BulletFrenzySound, AutoTurretSound;
+    public AudioClip SkillErrorSound;
     public AudioSource SkillSoundSource;
 
     // Use this for initialization
@@ -98,6 +155,33 @@ public class PlayerWeapons : MonoBehaviour {
         ButtonSound = GetComponent<AudioSource>();
         playerShooting = transform.GetChild(0).GetComponent<Shooting>(); //gets the BulletEffect's Shooting script
 
+        //hide anything that isn't obtained
+        if(skillE == 0)
+        {
+            StimPackImg.transform.localScale = Vector3.zero;
+            StimPackText.text = "";
+        }
+        if (skillR == 0)
+        {
+            BulletFrenzyImg.transform.localScale = Vector3.zero;
+            BulletFrenzyText.text = "";
+        }
+        if (skillT == 0)
+        {
+            AutoTurretImg.transform.localScale = Vector3.zero;
+            AutoTurretText.text = "";
+        }
+        if (gun2 == 0)
+        {
+            RifleImg.transform.localScale = Vector3.zero;
+            RifleText.text = "";
+        }
+        if (gun3 == 0)
+        {
+            ShotgunImg.transform.localScale = Vector3.zero;
+            ShotgunText.text = "";
+        }
+
         skillTimer = 0;
         SkillSoundSource = GetComponent<AudioSource>();
 
@@ -106,7 +190,7 @@ public class PlayerWeapons : MonoBehaviour {
         gun1 = true;
         if(gun2 == 1)
         {
-            gun_B.enabled = true;
+            //gun_B.enabled = true;
         }
         //if (gun3 == 1)
         //{
@@ -114,7 +198,7 @@ public class PlayerWeapons : MonoBehaviour {
         //}
         //Get current shotgun ammo as of this time
         ShotgunAmmo = PlayerPrefs.GetInt("ShotgunAmmo");
-        RifleAmmo = PlayerPrefs.GetInt("ShotgunAmmo");
+        RifleAmmo = PlayerPrefs.GetInt("RifleAmmo");
 
         weaponState = 1;
         CurrSkill = NONE;
@@ -158,26 +242,29 @@ public class PlayerWeapons : MonoBehaviour {
     private void SkillSelected()
     {
         //Stim Pack input
-        if (Input.GetKeyUp("e") && CurrSkill == NONE)
+        if (skillE != 0 && Input.GetKeyUp("e"))
         {
-            if (SkillPts >= StimPackCost)
+            if (SkillPts >= StimPackCost && CurrSkill == NONE)
             {
                 CurrSkill = STIMPACK;
                 SkillPts -= StimPackCost;
                 skillPtsSlider.value = SkillPts;
+                SkillSoundSource.volume = 60;
                 SkillSoundSource.clip = StimPackSound;
                 SkillSoundSource.Play();
             }
             else
             {
                 //some kind of indication that there would not be enough skill pts at the moment.
+                SkillSoundSource.clip = SkillErrorSound;
+                SkillSoundSource.Play();
             }
         }
 
         //Bullet frenzy input
-        if (Input.GetKeyUp("r") && CurrSkill == NONE)
+        if (skillR != 0 && Input.GetKeyUp("r"))
         {
-            if (SkillPts >= BulletFrenzyCost)
+            if (SkillPts >= BulletFrenzyCost && CurrSkill == NONE)
             {
                 CurrSkill = BULLETFRENZY;
                 SkillPts -= BulletFrenzyCost;
@@ -188,13 +275,15 @@ public class PlayerWeapons : MonoBehaviour {
             else
             {
                 //some kind of indication that there would not be enough skill pts at the moment.
+                SkillSoundSource.clip = SkillErrorSound;
+                SkillSoundSource.Play();
             }
         }
 
         //Auto turret input
-        if (Input.GetKeyUp("t") && CurrSkill == NONE)
+        if (skillT != 0 && Input.GetKeyUp("t"))
         {
-            if (SkillPts >= AutoTurretCost)
+            if (SkillPts >= AutoTurretCost && CurrSkill == NONE)
             {
                 CurrSkill = AUTOTURRET;
                 SkillPts -= AutoTurretCost;
@@ -203,6 +292,8 @@ public class PlayerWeapons : MonoBehaviour {
             else
             {
                 //some kind of indication that there would not be enough skill pts at the moment.
+                SkillSoundSource.clip = SkillErrorSound;
+                SkillSoundSource.Play();
             }
         }
 
@@ -309,7 +400,7 @@ public class PlayerWeapons : MonoBehaviour {
 
     }
 
-    public void EnableRifle()
+    public void EnableRifle() //when Rifle button is clicked in the shop
     {
         if (gun2 == 0)
         {
@@ -324,24 +415,58 @@ public class PlayerWeapons : MonoBehaviour {
         else //have rifle; buying ammo instead
         {
             if (GlobalScore >= RIFLEAMMO_PRICE)
-                GlobalScore -= RIFLE_PRICE;
-                int CurrRifleAmmo = PlayerPrefs.GetInt("RifleAmmo");
-                PlayerPrefs.SetInt("RifleAmmo", CurrRifleAmmo + 100);
+                GlobalScore -= RIFLEAMMO_PRICE;
+            int CurrRifleAmmo = PlayerPrefs.GetInt("RifleAmmo");
+            PlayerPrefs.SetInt("RifleAmmo", CurrRifleAmmo + 100);
         }
     }
 
-    public void EnableSpread()
+    public void EnableSpread() //when Multishot button is clicked in the shop
     {
-        if (GlobalScore >= SHOTGUN_PRICE)
+        if (gun3 == 0)
         {
-            GlobalScore -= SHOTGUN_PRICE;
+            if (GlobalScore >= SHOTGUN_PRICE)
+            {
+                GlobalScore -= SHOTGUN_PRICE;
+                int CurrShotgunAmmo = PlayerPrefs.GetInt("ShotgunAmmo");
+                PlayerPrefs.SetInt("ShotgunAmmo", CurrShotgunAmmo + 100);
+                gun3 = 1;
+                //gun_C.enabled = true; //do gun_C
+            }
+            //gun3 = 1;
+            //gun_B.enabled = true;
+        }
+        else
+        {
+            if (GlobalScore >= SHOTGUNAMMO_PRICE)
+                GlobalScore -= SHOTGUNAMMO_PRICE;
             int CurrShotgunAmmo = PlayerPrefs.GetInt("ShotgunAmmo");
             PlayerPrefs.SetInt("ShotgunAmmo", CurrShotgunAmmo + 100);
-            gun3 = 1;
-            //gun_C.enabled = true; //do gun_C
         }
-        //gun3 = 1;
-        //gun_B.enabled = true;
-    }
 
+    }
+    public void EnableStimPack()
+    {
+        if(GlobalScore >= STIMPACK_PRICE && skillE == 0)
+        {
+            GlobalScore -= STIMPACK_PRICE;
+            skillE = 1;
+        }
+    }
+    public void EnableBulletFrenzy()
+    {
+        if (GlobalScore >= BULLETFRENZY_PRICE && skillR == 0)
+        {
+            GlobalScore -= BULLETFRENZY_PRICE;
+            skillR = 1;
+        }
+    }
+    public void EnableAutoTurret()
+    {
+        if (GlobalScore >= AUTOTURRET_PRICE && skillT == 0)
+        {
+            GlobalScore -= AUTOTURRET_PRICE;
+            skillT = 1;
+        }
+    }
 }

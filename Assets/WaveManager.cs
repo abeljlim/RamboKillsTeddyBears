@@ -20,7 +20,7 @@ public class WaveManager : MonoBehaviour {
 
     AudioSource BGMusic;
     public AudioClip NightClip, DayClip;
-    DoubleAudioSource doubleAudioSource;
+    //DoubleAudioSource doubleAudioSource;
     public AudioSource DaySource, NightSource;
 
 // Use this for initialization
@@ -46,7 +46,7 @@ void Awake ()
                 EnemyHealth.initColors.Add(null);
         }
         BGMusic = GetComponent<AudioSource>();
-        doubleAudioSource = GetComponent<DoubleAudioSource>();
+        //doubleAudioSource = GetComponent<DoubleAudioSource>();
         if(isDay)
         {
             BGMusic.clip = DayClip;
@@ -129,17 +129,17 @@ void Awake ()
 
         if(!PlanetOrbit.isDay && BGMusic.clip == DayClip)
         {
-            //BGMusic.clip = NightClip;
-            doubleAudioSource.CrossFade(NightClip, 100, 3);
-            //BGMusic.Stop();
-            //BGMusic.Play();
+            BGMusic.clip = NightClip;
+            //doubleAudioSource.CrossFade(NightClip, 100, 3);
+            BGMusic.Stop();
+            BGMusic.Play();
         }
         else if(PlanetOrbit.isDay && BGMusic.clip == NightClip)
         {
-            doubleAudioSource.CrossFade(DayClip, 100, 3);
-            //BGMusic.clip = DayClip;
-            //BGMusic.Stop();
-            //BGMusic.Play();
+            //doubleAudioSource.CrossFade(DayClip, 100, 3);
+            BGMusic.clip = DayClip;
+            BGMusic.Stop();
+            BGMusic.Play();
             //BGMusic.cross
         }
 

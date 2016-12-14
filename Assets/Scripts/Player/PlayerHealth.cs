@@ -21,6 +21,7 @@ public class PlayerHealth : MonoBehaviour {
     //public int waitUpdateCycle = 0; //bool used just to wait an update cycle before executing the next code
     AudioSource playerAudio;
     PlayerMovement playerMovement;
+    public AudioClip HurtClip;
 
     bool isDead;
     bool damaged;
@@ -133,6 +134,7 @@ public class PlayerHealth : MonoBehaviour {
             return;
         }
 
+        playerAudio.clip = HurtClip;
         playerAudio.Play();
     }
 

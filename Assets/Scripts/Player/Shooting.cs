@@ -68,6 +68,50 @@ public class Shooting : MonoBehaviour
 
     private void Shoot()
     {
+        switch (PlayerWeapons.weaponState)
+        {
+            case 2:
+                int RifleAmmo = PlayerPrefs.GetInt("RifleAmmo");
+                if(RifleAmmo <= 0)
+                {
+                    //no ammo
+                    if(PlayerWeapons.CurrSkill == PlayerWeapons.NONE) //Error sound if trying to shoot regular bullets
+                    {
+                        //get the SkillSoundSource from Player's PlayerWeapons component
+                        PlayerWeapons ParentWeapons = transform.parent.gameObject.GetComponent<PlayerWeapons>();
+                        ParentWeapons.SkillSoundSource.clip = ParentWeapons.StimPackSound;
+                        ParentWeapons.SkillSoundSource.Play();
+                    }
+                    return;
+                }
+                else
+                {
+                    RifleAmmo--;
+                    PlayerPrefs.SetInt("RifleAmmo", RifleAmmo); //update ammo here
+                }
+                break;
+            case 3:
+                int ShotgunAmmo = PlayerPrefs.GetInt("ShotgunAmmo");
+                if (ShotgunAmmo <= 0)
+                {
+                    //no ammo
+                    if (PlayerWeapons.CurrSkill == PlayerWeapons.NONE) //Error sound if trying to shoot regular bullets
+                    {
+                        //get the SkillSoundSource from Player's PlayerWeapons component
+                        PlayerWeapons ParentWeapons = transform.parent.gameObject.GetComponent<PlayerWeapons>();
+                        ParentWeapons.SkillSoundSource.clip = ParentWeapons.StimPackSound;
+                        ParentWeapons.SkillSoundSource.Play();
+                    }
+                    return;
+                }
+                else
+                {
+                    ShotgunAmmo--;
+                    PlayerPrefs.SetInt("ShotgunAmmo", ShotgunAmmo); //update ammo here
+                }
+                break;
+        }
+
         timer = 0;
 
         bulletLightEffects.enabled = true;

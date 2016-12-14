@@ -9,9 +9,9 @@ public class Shop : MonoBehaviour {
         //int score = MoneyManager.money;
         //MoneyText.text = score.ToString("000000");
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update ()
     {
         if (PlayerPrefs.HasKey("score"))
         {
