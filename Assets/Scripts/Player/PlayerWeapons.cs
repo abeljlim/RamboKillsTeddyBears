@@ -19,9 +19,30 @@ public class PlayerWeapons : MonoBehaviour {
     public const int SHOTGUN_PRICE = 300;
     public const int SHOTGUNAMMO_PRICE = 100;
 
-    public const int STIMPACK_PRICE = 800;
-    public const int BULLETFRENZY_PRICE = 3000;
-    public const int AUTOTURRET_PRICE = 8000;
+    public const int STIMPACK_BASEPRICE = 800;
+    public const int BULLETFRENZY_BASEPRICE = 3000;
+    public const int AUTOTURRET_BASEPRICE = 8000;
+    public static int STIMPACK_PRICE
+    {
+        get
+        {
+            return STIMPACK_BASEPRICE + (skillE) * 1000; //price increment
+        }
+    }
+    public static int BULLETFRENZY_PRICE
+    {
+        get
+        {
+            return BULLETFRENZY_BASEPRICE + (skillR) * 1000; //price increment
+        }
+    }
+    public static int AUTOTURRET_PRICE
+    {
+        get
+        {
+            return AUTOTURRET_BASEPRICE + (skillE) * 1000; //price increment
+        }
+    }
 
     public static int ShotgunAmmo, RifleAmmo;
     public bool gun1;
@@ -304,7 +325,7 @@ public class PlayerWeapons : MonoBehaviour {
             //Stimpack skill
             if (CurrSkill == STIMPACK)
             {
-                if (skillTimer >= 5) //duration of stimpack is hardcoded as 5 here
+                if (skillTimer >= 5 + (skillE - 1)) //duration of stimpack is hardcoded as 5 + (level of skill - 1) here
                 {
                     playerShooting.shootingDelayScale = 1.0f;
                     CurrSkill = NONE;
@@ -322,7 +343,7 @@ public class PlayerWeapons : MonoBehaviour {
             //Bullet frenzy skill
             if (CurrSkill == BULLETFRENZY)
             {
-                if (skillTimer >= 2) //hardcoded as 2 here
+                if (skillTimer >= 2 + ((skillT - 1) * 0.2)) //hardcoded as 2 + (level of skill - 1) here
                 {
                     playerShooting.shootingDelayScale = 1.0f; //end
                     BulletFrenzyImg.color = Color.white;
@@ -450,7 +471,7 @@ public class PlayerWeapons : MonoBehaviour {
         if(GlobalScore >= STIMPACK_PRICE && skillE == 0)
         {
             GlobalScore -= STIMPACK_PRICE;
-            skillE = 1;
+            skillE++; //level up the skill
         }
     }
     public void EnableBulletFrenzy()
@@ -458,7 +479,7 @@ public class PlayerWeapons : MonoBehaviour {
         if (GlobalScore >= BULLETFRENZY_PRICE && skillR == 0)
         {
             GlobalScore -= BULLETFRENZY_PRICE;
-            skillR = 1;
+            skillR++;
         }
     }
     public void EnableAutoTurret()
@@ -466,7 +487,7 @@ public class PlayerWeapons : MonoBehaviour {
         if (GlobalScore >= AUTOTURRET_PRICE && skillT == 0)
         {
             GlobalScore -= AUTOTURRET_PRICE;
-            skillT = 1;
+            skillT++;
         }
     }
 }
