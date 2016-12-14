@@ -72,4 +72,14 @@ public class PlayerBullet : MonoBehaviour {
         //        enemyHealth.TakeDamage(50);
         //}
     }
+    //void OnTriggerEnter (Collider other)
+    //{
+    //    GameObject player = GameObject.FindGameObjectWithTag("Player");
+    //    if (other.gameObject == player && playerImmunityTime <= 0)
+    //    {
+    //        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+    //        playerHealth.TakeDamage(20);
+    //        justHitPlayer = true;
+    //    }
+    //}
 }

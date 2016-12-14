@@ -344,7 +344,7 @@ public class PlayerWeapons : MonoBehaviour {
             //Bullet frenzy skill
             if (CurrSkill == BULLETFRENZY)
             {
-                if (skillTimer >= 2 + ((skillT - 1) * 0.2)) //hardcoded as 2 + (level of skill - 1) here
+                if (skillTimer >= 2 + ((skillR - 1) * 0.2)) //hardcoded as 2 + (level of skill - 1) here
                 {
                     playerShooting.shootingDelayScale = 1.0f; //end
                     BulletFrenzyImg.color = Color.white;
@@ -469,7 +469,7 @@ public class PlayerWeapons : MonoBehaviour {
     }
     public void EnableStimPack()
     {
-        if(GlobalScore >= STIMPACK_PRICE && skillE == 0)
+        if(GlobalScore >= STIMPACK_PRICE)
         {
             GlobalScore -= STIMPACK_PRICE;
             skillE++; //level up the skill
@@ -477,7 +477,7 @@ public class PlayerWeapons : MonoBehaviour {
     }
     public void EnableBulletFrenzy()
     {
-        if (GlobalScore >= BULLETFRENZY_PRICE && skillR == 0)
+        if (GlobalScore >= BULLETFRENZY_PRICE)
         {
             GlobalScore -= BULLETFRENZY_PRICE;
             skillR++;
@@ -485,7 +485,7 @@ public class PlayerWeapons : MonoBehaviour {
     }
     public void EnableAutoTurret()
     {
-        if (GlobalScore >= AUTOTURRET_PRICE && skillT == 0)
+        if (GlobalScore >= AUTOTURRET_PRICE)
         {
             GlobalScore -= AUTOTURRET_PRICE;
             skillT++;

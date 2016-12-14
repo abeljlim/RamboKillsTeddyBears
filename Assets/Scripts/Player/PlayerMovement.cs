@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Wall hit");
+            //Debug.Log("Wall hit");
             playerRigidbody.MovePosition ( hit.point ); //go as close as possible to the place hit
         }
         

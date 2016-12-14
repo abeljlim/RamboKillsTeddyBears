@@ -75,7 +75,7 @@ public class AutoTurret : MonoBehaviour {
 
         //shooting periodically code
         shotTimer += Time.deltaTime;
-        if(shotTimer >= shootingDelay)
+        if(shotTimer >= shootingDelay * Mathf.Pow(0.95f, PlayerWeapons.skillT - 1))
             Shoot();
 
         turretTimer -= Time.deltaTime;
