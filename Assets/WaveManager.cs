@@ -108,6 +108,11 @@ void Awake ()
             PlayerPrefs.SetInt("currentLevel", level);
 
             PlayerPrefs.SetInt("score", MoneyManager.money);
+
+            //pass ammo of weapons
+            //PlayerPrefs.SetInt("ShotgunAmmo", PlayerWeapons.ShotgunAmmo);
+            //PlayerPrefs.SetInt("RifleAmmo", PlayerWeapons.RifleAmmo);
+
             EnemyHealth.bossExists = false; //no more boss at the end of the level
             Application.LoadLevel("Shop");
         }
