@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour {
     private Input currentKeyboardState;
     GameObject ground;
     private static Vector3 levelMin, levelMax;
-    
+
     // Use this for initialization
     void Start () {
 
@@ -105,6 +105,11 @@ public class PlayerMovement : MonoBehaviour {
         {
             playerRigidbody.MovePosition ( hit.point ); //go as close as possible to the place hit
         }
+        
+
+        //playerRigidbody.MovePosition(transform.position + movement);
+        //transform.rotation.SetFromToRotation(transform.position, transform.position + movement);
+        //playerRigidbody.MoveoRtation();
     }
 
     void Rotation()
