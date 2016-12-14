@@ -125,13 +125,13 @@ void Awake ()
         if(!PlanetOrbit.isDay && BGMusic.clip == DayClip)
         {
             //BGMusic.clip = NightClip;
-            doubleAudioSource.CrossFade(NightClip, 10, 3);
+            doubleAudioSource.CrossFade(NightClip, 100, 3);
             //BGMusic.Stop();
             //BGMusic.Play();
         }
         else if(PlanetOrbit.isDay && BGMusic.clip == NightClip)
         {
-            doubleAudioSource.CrossFade(DayClip, 10, 3);
+            doubleAudioSource.CrossFade(DayClip, 100, 3);
             //BGMusic.clip = DayClip;
             //BGMusic.Stop();
             //BGMusic.Play();
