@@ -23,71 +23,6 @@ ModelImporter:
     100030: UpperArm_R
     100032: UpperLeg_L
     100034: UpperLeg_R
-    100036: Cylinder
-    100038: Lights
-    100040: VisualSceneNode1
-    100042: VisualSceneNode10
-    100044: VisualSceneNode11
-    100046: VisualSceneNode12
-    100048: VisualSceneNode13
-    100050: VisualSceneNode14
-    100052: VisualSceneNode15
-    100054: VisualSceneNode16
-    100056: VisualSceneNode17
-    100058: VisualSceneNode18
-    100060: VisualSceneNode19
-    100062: VisualSceneNode2
-    100064: VisualSceneNode20
-    100066: VisualSceneNode21
-    100068: VisualSceneNode22
-    100070: VisualSceneNode23
-    100072: VisualSceneNode24
-    100074: VisualSceneNode25
-    100076: VisualSceneNode26
-    100078: VisualSceneNode27
-    100080: VisualSceneNode28
-    100082: VisualSceneNode29
-    100084: VisualSceneNode3
-    100086: VisualSceneNode30
-    100088: VisualSceneNode31
-    100090: VisualSceneNode32
-    100092: VisualSceneNode33
-    100094: VisualSceneNode34
-    100096: VisualSceneNode35
-    100098: VisualSceneNode36
-    100100: VisualSceneNode37
-    100102: VisualSceneNode38
-    100104: VisualSceneNode39
-    100106: VisualSceneNode4
-    100108: VisualSceneNode40
-    100110: VisualSceneNode41
-    100112: VisualSceneNode42
-    100114: VisualSceneNode43
-    100116: VisualSceneNode44
-    100118: VisualSceneNode45
-    100120: VisualSceneNode46
-    100122: VisualSceneNode47
-    100124: VisualSceneNode48
-    100126: VisualSceneNode49
-    100128: VisualSceneNode5
-    100130: VisualSceneNode50
-    100132: VisualSceneNode51
-    100134: VisualSceneNode52
-    100136: VisualSceneNode53
-    100138: VisualSceneNode54
-    100140: VisualSceneNode55
-    100142: VisualSceneNode56
-    100144: VisualSceneNode57
-    100146: VisualSceneNode58
-    100148: VisualSceneNode59
-    100150: VisualSceneNode6
-    100152: VisualSceneNode60
-    100154: VisualSceneNode61
-    100156: VisualSceneNode62
-    100158: VisualSceneNode63
-    100160: VisualSceneNode7
-    100162: VisualSceneNode8
-    100164: VisualSceneNode9
     400000: Armature
     400002: Cube
     400004: Foot_L
@@ -106,81 +41,11 @@ ModelImporter:
     400030: UpperArm_R
     400032: UpperLeg_L
     400034: UpperLeg_R
-    400036: Cylinder
-    400038: Lights
-    400040: VisualSceneNode1
-    400042: VisualSceneNode10
-    400044: VisualSceneNode11
-    400046: VisualSceneNode12
-    400048: VisualSceneNode13
-    400050: VisualSceneNode14
-    400052: VisualSceneNode15
-    400054: VisualSceneNode16
-    400056: VisualSceneNode17
-    400058: VisualSceneNode18
-    400060: VisualSceneNode19
-    400062: VisualSceneNode2
-    400064: VisualSceneNode20
-    400066: VisualSceneNode21
-    400068: VisualSceneNode22
-    400070: VisualSceneNode23
-    400072: VisualSceneNode24
-    400074: VisualSceneNode25
-    400076: VisualSceneNode26
-    400078: VisualSceneNode27
-    400080: VisualSceneNode28
-    400082: VisualSceneNode29
-    400084: VisualSceneNode3
-    400086: VisualSceneNode30
-    400088: VisualSceneNode31
-    400090: VisualSceneNode32
-    400092: VisualSceneNode33
-    400094: VisualSceneNode34
-    400096: VisualSceneNode35
-    400098: VisualSceneNode36
-    400100: VisualSceneNode37
-    400102: VisualSceneNode38
-    400104: VisualSceneNode39
-    400106: VisualSceneNode4
-    400108: VisualSceneNode40
-    400110: VisualSceneNode41
-    400112: VisualSceneNode42
-    400114: VisualSceneNode43
-    400116: VisualSceneNode44
-    400118: VisualSceneNode45
-    400120: VisualSceneNode46
-    400122: VisualSceneNode47
-    400124: VisualSceneNode48
-    400126: VisualSceneNode49
-    400128: VisualSceneNode5
-    400130: VisualSceneNode50
-    400132: VisualSceneNode51
-    400134: VisualSceneNode52
-    400136: VisualSceneNode53
-    400138: VisualSceneNode54
-    400140: VisualSceneNode55
-    400142: VisualSceneNode56
-    400144: VisualSceneNode57
-    400146: VisualSceneNode58
-    400148: VisualSceneNode59
-    400150: VisualSceneNode6
-    400152: VisualSceneNode60
-    400154: VisualSceneNode61
-    400156: VisualSceneNode62
-    400158: VisualSceneNode63
-    400160: VisualSceneNode7
-    400162: VisualSceneNode8
-    400164: VisualSceneNode9
-    2300000: Cylinder
-    3300000: Cylinder
     4300000: Cube
-    4300002: Cylinder
-    4300004: VisualSceneNode63
     7400000: Default Take
     7400002: ArmatureAction
     9500000: //RootNode
     13700000: Cube
-    13700002: VisualSceneNode63
   materials:
     importMaterials: 1
     materialName: 0
