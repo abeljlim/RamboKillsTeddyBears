@@ -6,10 +6,9 @@ using UnityEditor;
 public class PlayerWeapons : MonoBehaviour {
 
     AudioSource ButtonSound;
-    public Text gun_A, gun_B;
 
     public Text skillTextImg, text_skill;
-    public Image StimPackImg, BulletFrenzyImg, AutoTurretImg;
+    public Image StimPackImg, BulletFrenzyImg, AutoTurretImg, PistolImg, RifleImg, ShotgunImg;
     public const int NONE = 0, STIMPACK = 1, BULLETFRENZY = 2, AUTOTURRET = 3;
     public static int CurrSkill = NONE;
     public bool gun1, gun2, gun3, gun4;
@@ -40,6 +39,8 @@ public class PlayerWeapons : MonoBehaviour {
 
         skillTimer = 0;
         SkillSoundSource = GetComponent<AudioSource>();
+
+        PistolImg.color = Color.black;
 
         gun1 = true;
         gun2 = true;
@@ -81,7 +82,7 @@ public class PlayerWeapons : MonoBehaviour {
 
         if(!gun1)
         {
-            gun_A.enabled = false;
+
         }
     }
 
@@ -148,17 +149,13 @@ public class PlayerWeapons : MonoBehaviour {
                     playerShooting.shootingDelayScale = 1.0f;
                     CurrSkill = NONE;
                     skillTimer = 0;
-                    //skillTextImg.color = Color.white;
                     StimPackImg.color = Color.white;
-                    text_skill.enabled = false;
                 }
             }
 
             if (CurrSkill == STIMPACK)
             {
                 playerShooting.shootingDelayScale = 0.5f; //set to half
-                text_skill.enabled = true;
-                //skillTextImg.color = Color.black;
                 StimPackImg.color = Color.red;
             }
 
@@ -204,6 +201,9 @@ public class PlayerWeapons : MonoBehaviour {
         if(Input.GetKeyUp("1"))
         {
             weaponState = 1;
+            PistolImg.color = Color.black;
+            RifleImg.color = Color.white;
+            ShotgunImg.color = Color.white;
             ButtonSound.PlayOneShot(ButtonPress);
         }
         if (Input.GetKeyUp("2"))
@@ -211,6 +211,9 @@ public class PlayerWeapons : MonoBehaviour {
             if (gun1)
             {
                 weaponState = 2;
+                PistolImg.color = Color.white;
+                RifleImg.color = Color.black;
+                ShotgunImg.color = Color.white;
                 ButtonSound.PlayOneShot(ButtonPress);
             }
         }
@@ -219,19 +222,20 @@ public class PlayerWeapons : MonoBehaviour {
             if (gun2)
             {
                 weaponState = 3;
+                PistolImg.color = Color.white;
+                RifleImg.color = Color.white;
+                ShotgunImg.color = Color.black;
                 ButtonSound.PlayOneShot(ButtonPress);
             }
         }
 
         if (weaponState == 1)
         {
-            gun_A.color = Color.white;
-            gun_B.color = Color.black;
+
         }
         else if (weaponState == 2)
         {
-            gun_B.color = Color.white;
-            gun_A.color = Color.black;
+
         }
 
     }
@@ -239,13 +243,11 @@ public class PlayerWeapons : MonoBehaviour {
     public void EnableRifle()
     {
         gun1 = true;
-        gun_B.enabled = true;
     }
 
     public void EnableSpread()
     {
         gun2 = true;
-        gun_B.enabled = true;
     }
 
 }
