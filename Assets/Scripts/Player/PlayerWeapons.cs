@@ -170,7 +170,7 @@ public class PlayerWeapons : MonoBehaviour {
     // Use this for initialization
     void Start() {
 
-        if (!(Application.loadedLevelName == "Survival Game"))
+        if (!((Application.loadedLevelName == "Survival Game") || (Application.loadedLevelName == "Multiplayer")))
             return;
 
         ButtonSound = GetComponent<AudioSource>();
@@ -228,7 +228,7 @@ public class PlayerWeapons : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (!(Application.loadedLevelName == "Survival Game"))
+        if (!((Application.loadedLevelName == "Survival Game") || (Application.loadedLevelName == "Multiplayer")))
             return;
 
         //Skill regen code

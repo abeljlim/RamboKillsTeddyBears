@@ -19,6 +19,11 @@ public class MainMenu : MonoBehaviour {
         Application.LoadLevel("Survival Game");
     }
 
+    public void BeginMulti()
+    {
+        Application.LoadLevel("Multiplayer");
+    }
+
     // Quit the game
     public void QuitGame()
     {
