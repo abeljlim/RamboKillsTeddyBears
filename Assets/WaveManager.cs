@@ -13,9 +13,15 @@ public class WaveManager : MonoBehaviour {
     public int[] levelTime; //full time for the wave to finish
     public int waveStartTime = 5;
     public static bool isDay = true;
+    //public static bool prevWasDay = true;
 
     public Slider bossHealthSlider;
     public EnemyHealth bossEnemyHealth;
+
+    AudioSource BGMusic;
+    public AudioClip NightClip, DayClip;
+    DoubleAudioSource doubleAudioSource;
+    public AudioSource DaySource, NightSource;
 
 // Use this for initialization
 // start before any of the SpawnPoint code runs
@@ -38,6 +44,16 @@ void Awake ()
             EnemyHealth.initColors = new List<Color[]>(10); //with 4 colors at the moment
             for (int i = 0; i < 10; i++)
                 EnemyHealth.initColors.Add(null);
+        }
+        BGMusic = GetComponent<AudioSource>();
+        doubleAudioSource = GetComponent<DoubleAudioSource>();
+        if(isDay)
+        {
+            BGMusic.clip = DayClip;
+            BGMusic.Play();
+        }
+        else
+        {
         }
     }
 
@@ -92,14 +108,40 @@ void Awake ()
             PlayerPrefs.SetInt("currentLevel", level);
 
             PlayerPrefs.SetInt("score", MoneyManager.money);
+
+            //pass ammo of weapons
+            //PlayerPrefs.SetInt("ShotgunAmmo", PlayerWeapons.ShotgunAmmo);
+            //PlayerPrefs.SetInt("RifleAmmo", PlayerWeapons.RifleAmmo);
+
+            EnemyHealth.bossExists = false; //no more boss at the end of the level
             Application.LoadLevel("Shop");
         }
 
         //toggle the state between night and day
         if ((waveTime >= 0) && (waveTime < (levelTime[level - 1] / 2)))
+        {
             isDay = true;
+        }
         else
+        {
             isDay = false;
+        }
+
+        if(!PlanetOrbit.isDay && BGMusic.clip == DayClip)
+        {
+            //BGMusic.clip = NightClip;
+            doubleAudioSource.CrossFade(NightClip, 100, 3);
+            //BGMusic.Stop();
+            //BGMusic.Play();
+        }
+        else if(PlanetOrbit.isDay && BGMusic.clip == NightClip)
+        {
+            doubleAudioSource.CrossFade(DayClip, 100, 3);
+            //BGMusic.clip = DayClip;
+            //BGMusic.Stop();
+            //BGMusic.Play();
+            //BGMusic.cross
+        }
 
         //start spawning of the current wave after waveStartTime
         if (waveTime >= waveStartTime && !EnemySpawner.spawning)

@@ -12,13 +12,17 @@ public class EnemyMovement : MonoBehaviour {
     //public float nightSpeed = 4.5f;
     public float daySpeed;
     public float daySpeedDeviation;
+    public bool IsDemo;
 
     EnemyHealth enemyHealth;
 
 	// Use this for initialization
 	void Start () {
 
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        if (!IsDemo)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
         nav = GetComponent<NavMeshAgent> ();
         enemyHealth = GetComponent<EnemyHealth> ();
 
@@ -41,7 +45,21 @@ public class EnemyMovement : MonoBehaviour {
             }*/
             return;
         }
-        nav.SetDestination ( player.position );
+        if (IsDemo)
+        {
+            GameObject DemoDest = GameObject.FindGameObjectWithTag("DemoEnemyDest");
+            nav.SetDestination(DemoDest.transform.position);
+            //Debug.Log(DemoDest.transform.position);
+            Vector3 dist = DemoDest.transform.position - transform.position;
+            if (dist.sqrMagnitude < 9)
+            {
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            nav.SetDestination(player.position);
+        }
         //Debug.Log ( "Playerpos: " + player.position );
         //Debug.Log ( "Path:" );
         /*foreach (Vector3 v3 in nav.path.corners) {

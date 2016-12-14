@@ -148,23 +148,23 @@ public class PlayerHealth : MonoBehaviour {
     {
         if (currentHealth > 70)
         {
-            characterState.text = "d";
-            characterState.color = Color.green;
+            //characterState.text = "d";
+            //characterState.color = Color.green;
         }
         else if (currentHealth <= 70 && currentHealth >= 40)
         {
-            characterState.text = "h";
-            characterState.color = Color.yellow;
+            //characterState.text = "h";
+            //characterState.color = Color.yellow;
         }
         else if (currentHealth < 40 && currentHealth > 0)
         {
-            characterState.text = "x";
-            characterState.color = Color.red;
+            //characterState.text = "x";
+            //characterState.color = Color.red;
         }
         else
         {
-            characterState.text = "z";
-            characterState.color = Color.white;
+            //characterState.text = "z";
+            //characterState.color = Color.white;
         }
     }
     /// <summary>
