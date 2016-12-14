@@ -30,6 +30,7 @@ public class Shop : MonoBehaviour {
     public void ExitShop()
     {
         int previousScene = PlayerPrefs.GetInt("previousScene");
+        Debug.Log(previousScene);
         Application.LoadLevel(previousScene);
     }
 
