@@ -26,6 +26,9 @@ public class PlayerWeapons : MonoBehaviour {
     public int BulletFrenzyCost = 25;
     public int AutoTurretCost = 25;
 
+    public AudioClip StimPackSound, BulletFrenzySound, AutoTurretSound;
+    public AudioSource SkillSoundSource;
+
     // Use this for initialization
     void Start() {
 
@@ -36,6 +39,7 @@ public class PlayerWeapons : MonoBehaviour {
         playerShooting = transform.GetChild(0).GetComponent<Shooting>(); //gets the BulletEffect's Shooting script
 
         skillTimer = 0;
+        SkillSoundSource = GetComponent<AudioSource>();
 
         gun1 = true;
         gun2 = true;
@@ -91,6 +95,8 @@ public class PlayerWeapons : MonoBehaviour {
                 CurrSkill = STIMPACK;
                 SkillPts -= StimPackCost;
                 skillPtsSlider.value = SkillPts;
+                SkillSoundSource.clip = StimPackSound;
+                SkillSoundSource.Play();
             }
             else
             {
@@ -106,6 +112,8 @@ public class PlayerWeapons : MonoBehaviour {
                 CurrSkill = BULLETFRENZY;
                 SkillPts -= BulletFrenzyCost;
                 skillPtsSlider.value = SkillPts; //update slider
+                SkillSoundSource.clip = BulletFrenzySound;
+                SkillSoundSource.Play();
             }
             else
             {
@@ -140,7 +148,7 @@ public class PlayerWeapons : MonoBehaviour {
                     playerShooting.shootingDelayScale = 1.0f;
                     CurrSkill = NONE;
                     skillTimer = 0;
-                    skillTextImg.color = Color.white;
+                    //skillTextImg.color = Color.white;
                     StimPackImg.color = Color.white;
                     text_skill.enabled = false;
                 }
