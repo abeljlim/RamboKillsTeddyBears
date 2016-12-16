@@ -6,7 +6,6 @@ __kernel void TestOpenCL(__global const float *a, __global const float *b, __glo
 	// maybe t1 and t2 buffers, putting in those where if resultposition%2 == 0 then put in t1, and if resultposition%2 == 1 then put into t2
 	// and add such results into a new input and output buffer, and set those as the args for this TestOpenCL function ... until the buffer size would become 1 for the final buffer ... at the final step ... and all other buffers would be empty or used ...
 	// So, would make a linked list of buffers? With keeping in mind the ID ...
-	// And coul
 	int iGID = get_global_id(0);
 
 	// elements operation  
